@@ -15,6 +15,19 @@
 #-----------------------------------------------------------------------------
 
 import pygame
+import random
+import time
+
+""" Set up the game and run the main game loop """
+pygame.init()      # Prepare the pygame module for use
+screenHeight = 1000 # Screen Height
+screenWidth = 720 # Screen Width
+screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
+    
+clock = pygame.time.Clock()  #Force frame rate to be slower
+
+
+
 #from SpaceShip import spaceShip
 IDLE = pygame.image.load(("Images//ship_3.png"))
 RIGHT = pygame.image.load(("Images//ship_3.png"))
@@ -25,8 +38,9 @@ LEFT = pygame.image.load(("Images//ship_3.png"))
 class spaceShip:
     xPos = 360
     yPos = 900
-    moveSpeed = 11.5
-    #userInput = pygame.key.get_pressed()    # Gets the state of all keyboard buttons
+    movementSpeed = 11.5
+    movementSpeedIdle = 0
+    userInput = pygame.key.get_pressed()    # Gets the state of all keyboard buttons
     
     # __init__ - Initializing attributes of class
     # self - Accesses the attritbutes of class
@@ -70,24 +84,40 @@ class spaceShip:
             self.ship_right = False
             self.ship_left = False
             
-            
-            
-            
+        def right(self):
+            self.image = self.right_img                      # Sets image of spaceShip to right image
+            if self.ship_right:                              # If spaceShip is set to right
+                self.ship_rect.x += self.movementSpeed       # Increase the x-position of the spaceShip
+            self.ship_rect = self.image.get_rect()           # Gets the rectangles area of surface
+            self.ship_rect.x = self.xPos                     # Sets spaceShip rectangle x-cord to x-positon
+            self.ship_rect.y = self.yPos                     # Sets spaceShip rectangle y-cord to y-positon
+        
+        def left(self):
+            self.image = self.left_img                       # Sets image of spaceShip to left image
+            if self.ship_left:                               # If spaceShip is set to left
+                self.ship_rect.x -= self.movementSpeed       # Decrease the x-position of the spaceShip
+            self.ship_rect = self.image.get_rect()           # Gets the rectangles area of surface
+            self.ship_rect.x = self.xPos                     # Sets spaceShip rectangle x-cord to x-positon
+            self.ship_rect.y = self.yPos                     # Sets spaceShip rectangle y-cord to y-positon
+        
+        def idle(self):
+            self.image = self.idle_img                       # Sets image of spaceShip to idle image
+            if self.ship_idle:                               # If spaceShip is set to idle
+                self.ship_rect.x += self.movementSpeedIdle   # The x-position of the spaceShip is stationary
+            self.ship_rect = self.image.get_rect()           # Gets the rectangles area of surface
+            self.ship_rect.x = self.xPos                     # Sets spaceShip rectangle x-cord to x-positon
+            self.ship_rect.y = self.yPos                     # Sets spaceShip rectangle y-cord to y-positon
+         
             
             
         # Blits image on to screen
         def draw(self, screen):
-            creen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
+            screen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
+            
             
 def main():
     #-----------------------------Setup------------------------------------------------------#
-    """ Set up the game and run the main game loop """
-    pygame.init()      # Prepare the pygame module for use
-    screenHeight = 1000 # Screen Height
-    screenWidth = 720 # Screen Width
-    screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
-    
-    clock = pygame.time.Clock()  #Force frame rate to be slower
+    pygame.init()
 
     
     #-----------------------------Program Variable Initialization----------------------------#
@@ -106,16 +136,19 @@ def main():
 
         #-----------------------------Game Logic---------------------------------------------#
         # Update your game objects and data structures here...
-
-
+        screen.fill((0, 0, 0))
+        
+        
+        userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
         # So first fill everything with the background color
-        screen.fill((0, 0, 0))
-
+        
+        clock.tick(30)  #Force frame rate to be slower
+        pygame.display.update()
                
-        user.draw(screen) # Draws dinosaur on screen
-        user.update(userInput) # Updates dinosaur on screen when needed
+        user.draw(screen) # Draws spaceShip on screen
+        user.update(userInput) # Updates spaceShip on screen when needed
         
 
         # Now the surface is ready, tell pygame to display it!
