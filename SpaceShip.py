@@ -1,17 +1,15 @@
 import pygame
 
-
-
-
-
-
 IDLE = pygame.image.load(("Images//ship_4.png"))
 RIGHT = pygame.image.load(("Images//ship_4.png"))
 LEFT = pygame.image.load(("Images//ship_4.png"))
+SHOT = pygame.image.load(("Images//laser2.png"))
 
 
 
-class spaceShip():
+
+
+class spaceShip(object):
     xPos = 220
     yPos = 360
     movementSpeed = 6
@@ -37,19 +35,19 @@ class spaceShip():
     def update(self, userInput):
         
         # If user
-        if userInput[pygame.K_LEFT] and not self.ship_left:
+        if userInput[pygame.K_LEFT] or userInput[pygame.K_a] and not self.ship_left:
             self.ship_idle = False     
             self.ship_right = False
             self.ship_left = True
             
         # If user 
-        elif userInput[pygame.K_RIGHT] and not self.ship_right:
+        elif userInput[pygame.K_RIGHT] or userInput[pygame.K_d] and not self.ship_right:
             self.ship_idle = False
             self.ship_right = True
             self.ship_left = False
             
         # If user hasn't pressed any key
-        elif not (userInput[pygame.K_LEFT] or userInput[pygame.K_RIGHT]):
+        elif not (userInput[pygame.K_LEFT] or userInput[pygame.K_RIGHT] or userInput[pygame.K_d] or userInput[pygame.K_a]):
             self.ship_idle = True
             self.ship_right = False
             self.ship_left = False
@@ -80,5 +78,7 @@ class spaceShip():
     # Blits image on to screen
     def draw(self, screen):
             screen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
+            
+#class projectile(object):
         
         
