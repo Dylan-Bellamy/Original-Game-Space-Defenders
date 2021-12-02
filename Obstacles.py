@@ -7,10 +7,10 @@ class obstacle:
     
     # Initializing attributes of class
     def __init__(self, image, typeIn):
-        self.image = image                           # First Arguement
-        self.type = typeIn                             # Second Arguement
-        self.rect = self.image[self.type].get_rect() # Gets rectangle of image that going to be displayed
-        self.rect.y = screenHight                    # Obstacles are created on the top of the screen
+        self.image = image                            # First Arguement
+        self.type = typeIn                            # Second Arguement
+        self.rect = self.image [self.typeIn].get_rect() # Gets rectangle of image that going to be displayed
+        self.rect.y = screenHeight                    # Obstacles are created on the top of the screen
 
     # Update Function
     def update(self):
@@ -28,8 +28,8 @@ class FlamingMeteor(obstacle):
     # Initializing attributes of class
     def __init__(self, image):
         self.image = image   
-        self.type = random.randint(0, 2)
-        super().__init__(image, self.type)
+        self.typeIn = random.randint(0, 2)
+        super().__init__(image, self.typeIn)
         self.rect.x = random.randint(25, 455)
 
 
@@ -38,8 +38,8 @@ class Meteor(obstacle):
     # Initializing attributes of class
     def __init__(self, image):
         self.image = image   
-        self.type = random.randint(0, 2)
-        super().__init__(image, self.type)
+        self.typeIn = random.randint(0, 2)
+        super().__init__(image, self.typeIn)
         self.rect.x = random.randint(25, 455)
     
 #         # Blits image on to screen

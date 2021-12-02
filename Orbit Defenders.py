@@ -29,16 +29,20 @@ clock = pygame.time.Clock()  #Force frame rate to be slower
 
 
 
-from SpaceShip import spaceShip
+from SpaceShip import Ship
 from Obstacles import obstacle
 from Obstacles import FlamingMeteor
 from Obstacles import Meteor
 
 explosion = pygame.image.load(("Images//explosion.png"))
-backGround = pygame.image.load(("Images//background.png"))
+backGround = pygame.image.load(("Images//background.jpg"))
 backGround = pygame.transform.smoothscale(backGround, (screenWidth, screenHeight))
 meteorOne = pygame.image.load(("Images//flaming_meteor.png"))
 meteorTwo = pygame.image.load(("Images//meteor.png"))
+IDLE = pygame.image.load(("Images//ship_4.png"))
+RIGHT = pygame.image.load(("Images//ship_4.png"))
+LEFT = pygame.image.load(("Images//ship_4.png"))
+SHOT = pygame.image.load(("Images//laser2.png"))
 
 
 def main():
@@ -47,10 +51,10 @@ def main():
 
     
     #-----------------------------Program Variable Initialization----------------------------#
-    global xPosBackground, yPosBackground
-    user = spaceShip()
+    global xPosBackground, yPosBackground, gameSpeed
+    gameSpeed = 5
+    user = Ship()
     obstacles = []
-    #singleOb = meteor()
     deathCount = 0
     xPosBackground = 0
     yPosBackground = 0
@@ -86,16 +90,18 @@ def main():
 
 
 
-#         
-#         for obstacle in obstacles:
-#             print(obstacles, obstacle, screen)
-#             obstacle.draw(screen) # Draws Obstacles
-#             obstacle.update() # Updates Obstacle
-#             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
-#                 
-#                pygame.time.delay(3000) # Stops game for 3 seconds
-#                deathCount += 1         # Adds or equals one to deathCount
-#                endscreen(deathCount)   # Starts Endscreen
+         
+            for obstacle in obstacles:
+                print(obstacles, obstacle, screen)
+                obstacle.draw(screen) # Draws Obstacles
+                obstacle.update() # Updates Obstacle
+                if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
+                    
+                    screen.blit(explosion, (xPos, yPos))
+                 
+                    pygame.time.delay(3000) # Stops game for 3 seconds
+                    deathCount += 1         # Adds or equals one to deathCount
+                    endscreen(deathCount)   # Starts Endscreen
         
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#

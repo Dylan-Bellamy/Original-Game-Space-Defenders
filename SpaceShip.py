@@ -9,7 +9,7 @@ SHOT = pygame.image.load(("Images//laser2.png"))
 
 
 
-class spaceShip(object):
+class Ship(object):
     xPos = 220
     yPos = 360
     movementSpeed = 6
