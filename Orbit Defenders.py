@@ -31,12 +31,14 @@ clock = pygame.time.Clock()  #Force frame rate to be slower
 
 from SpaceShip import spaceShip
 from Obstacles import obstacle
-from Obstacles import flamingMeteor
-from Obstacles import meteor
+from Obstacles import FlamingMeteor
+from Obstacles import Meteor
 
 explosion = pygame.image.load(("Images//explosion.png"))
 backGround = pygame.image.load(("Images//background.png"))
 backGround = pygame.transform.smoothscale(backGround, (screenWidth, screenHeight))
+meteorOne = pygame.image.load(("Images//flaming_meteor.png"))
+meteorTwo = pygame.image.load(("Images//meteor.png"))
 
 
 def main():
@@ -48,6 +50,7 @@ def main():
     global xPosBackground, yPosBackground
     user = spaceShip()
     obstacles = []
+    #singleOb = meteor()
     deathCount = 0
     xPosBackground = 0
     yPosBackground = 0
@@ -75,17 +78,21 @@ def main():
         # If amount obstacles is equal to 0 then it randomly picks a smallCactus, largeCactus, or bird and appends them to the obstactles list
         if len(obstacles) == 0:
             if random.randint(0, 1) == 0:
-                obstacles.append(meteor)
+                obstacles.append(Meteor(meteorTwo))
             elif random.randint(0, 1) == 1:
-                obstacles.append(flamingMeteor)
+                obstacles.append(FlamingMeteor(meteorOne))
             
 
-        
-#        for obstacle in obstacles:
-#            obstacle.draw(screen) # Draws Obstacles
-#            obstacle.update() # Updates Obstacle
-#            if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
-                
+
+
+
+#         
+#         for obstacle in obstacles:
+#             print(obstacles, obstacle, screen)
+#             obstacle.draw(screen) # Draws Obstacles
+#             obstacle.update() # Updates Obstacle
+#             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
+#                 
 #                pygame.time.delay(3000) # Stops game for 3 seconds
 #                deathCount += 1         # Adds or equals one to deathCount
 #                endscreen(deathCount)   # Starts Endscreen
