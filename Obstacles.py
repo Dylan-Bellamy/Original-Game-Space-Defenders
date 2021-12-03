@@ -1,16 +1,21 @@
 import pygame
 import random
 
+screenHeight = 480 # Screen Height
+screenWidth = 480 # Screen Width
+screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
 
     
 class obstacle:   
+    global gameSpeed
+    gameSpeed = 5
     
     # Initializing attributes of class
     def __init__(self, image, typeIn):
         self.image = image                            # First Arguement
         self.type = typeIn                            # Second Arguement
         self.rect = self.image [self.typeIn].get_rect() # Gets rectangle of image that going to be displayed
-        self.rect.y = screenHeight                    # Obstacles are created on the top of the screen
+        self.rect.x = screenWidth                    # Obstacles are created on the Right of the screen
 
     # Update Function
     def update(self):
@@ -28,9 +33,9 @@ class FlamingMeteor(obstacle):
     # Initializing attributes of class
     def __init__(self, image):
         self.image = image   
-        self.typeIn = random.randint(0, 2)
+        self.typeIn = random.randint(0, 5)
         super().__init__(image, self.typeIn)
-        self.rect.x = random.randint(25, 455)
+        self.rect.y = random.randint(25, 455)
 
 
 class Meteor(obstacle):
@@ -38,11 +43,7 @@ class Meteor(obstacle):
     # Initializing attributes of class
     def __init__(self, image):
         self.image = image   
-        self.typeIn = random.randint(0, 2)
+        self.typeIn = random.randint(0, 5)
         super().__init__(image, self.typeIn)
-        self.rect.x = random.randint(25, 455)
+        self.rect.y = random.randint(25, 455)
     
-#         # Blits image on to screen
-#     def draw(self,screen):
-#         print("Got into the draw")
-#         screen.blit(self.image[self.type], self.rect)

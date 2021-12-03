@@ -34,15 +34,35 @@ from Obstacles import obstacle
 from Obstacles import FlamingMeteor
 from Obstacles import Meteor
 
-explosion = pygame.image.load(("Images//explosion.png"))
+explosion = [pygame.image.load(("Images//Explosions//Red//48px//1.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//2.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//3.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//4.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//5.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//6.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//7.png")),
+             pygame.image.load(("Images//Explosions//Red//48px//8.png"))]
 backGround = pygame.image.load(("Images//background.jpg"))
 backGround = pygame.transform.smoothscale(backGround, (screenWidth, screenHeight))
-meteorOne = pygame.image.load(("Images//flaming_meteor.png"))
-meteorTwo = pygame.image.load(("Images//meteor.png"))
-IDLE = pygame.image.load(("Images//ship_4.png"))
-RIGHT = pygame.image.load(("Images//ship_4.png"))
-LEFT = pygame.image.load(("Images//ship_4.png"))
-SHOT = pygame.image.load(("Images//laser2.png"))
+meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
+             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//2.png")),
+             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//3.png")),
+             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//4.png")),
+             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//5.png")),
+             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//6.png")),]
+meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")),
+             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//2.png")),
+             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//3.png")),
+             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//4.png")),
+             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//5.png")),
+             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//6.png")),]
+
+
+#SHOT = pygame.image.load[(("Images//Shot1.png")),
+#                         (("Images//Shot2.png"))]
+                        # (("Images//Shot3.png"))
+                        # (("Images//Shot4.png"))
+                         #(("Images//Shot5.png"))]
 
 
 def main():
