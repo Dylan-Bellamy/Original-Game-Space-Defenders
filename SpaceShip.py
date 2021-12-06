@@ -6,26 +6,26 @@ IDLE = [pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//1.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//3.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//4.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//5.png")),
-        pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//6.png")),]
+        pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//6.png"))]
 RIGHT =[pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//1.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//2.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//3.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//4.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//5.png")),
-        pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//6.png")),]
+        pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//6.png"))]
 LEFT = [pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//1.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//2.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//3.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//4.png")),
         pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//5.png")),
-        pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//6.png")),]
+        pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//6.png"))]
 
 
 
 class Ship(object):
-    xPos = 220
-    yPos = 360
-    movementSpeed = 6
+    xPos = 120
+    yPos = 240
+    movementSpeed = 5
     movementSpeedIdle = 0
     userInput = pygame.key.get_pressed()    # Gets the state of all keyboard buttons
     
@@ -40,15 +40,15 @@ class Ship(object):
         self.ship_right = False
         self.ship_left = False 
         
-        self.step_index = 0                    # step_index starts at 0 and used to help animate Ship
-        self.image = self.idle_img[0]             # Initializing first image of spaceShip
+        self.step_index = 0                     # step_index starts at 0 and used to help animate Ship
+        self.image = self.idle_img[0]  #[0]           # Initializing first image of spaceShip
         self.ship_rect = self.image.get_rect()  # Takes the rectangle of the spaceShip
         self.ship_rect.x = self.xPos            # Sets the x-cord of rectangle to the x-position
         self.ship_rect.y = self.yPos            # Sets the y-cord of rectangle to the y-position
         
     def update(self, userInput):
         
-        if self.step_index >= 10:  # If step_index is greater or equal to 10
+        if self.step_index >= 50:  # If step_index is greater or equal to 10
             self.step_index = 0    # Then reset step_index's value to 0
         
         # If user
@@ -77,23 +77,20 @@ class Ship(object):
             self.left()
             
     def right(self):
-        self.image = self.right_img[self.step_index // 5] # Cycles through RIGHT list of images every 5 steps
-        self.image = self.right_img                      # Sets image of spaceShip to right image
+        self.image = self.right_img[self.step_index // 25] # Cycles through RIGHT list of images every 5 steps
         self.ship_rect.y += self.movementSpeed           # Increase the y-position of the spaceShip
         self.yPos = self.ship_rect.y
         self.step_index += 1                             # Adds one to or makes step_index equal to one
         
     def left(self):
-        self.image = self.left_img[self.step_index // 5] # Cycles through LEFT list of images every 5 steps
-        self.image = self.left_img                       # Sets image of spaceShip to left image    
+        self.image = self.left_img[self.step_index // 25] # Cycles through LEFT list of images every 5 steps    
         self.ship_rect.y -= self.movementSpeed           # Decrease the y-position of the spaceShip
         self.yPos = self.ship_rect.y
         self.step_index += 1                             # Adds one to or makes step_index equal to one
         
         
     def idle(self):
-        self.image = self.idle_img[self.step_index // 5] # Cycles through IDLE list of images every 5 steps
-        self.image = self.idle_img                       # Sets image of spaceShip to idle image
+        self.image = self.idle_img[self.step_index // 25] # Cycles through IDLE list of images every 5 steps
         self.ship_rect.y += self.movementSpeedIdle       # The y-position of the spaceShip is stationary
         self.yPos = self.ship_rect.y
         self.step_index += 1                             # Adds one to or makes step_index equal to one
@@ -102,8 +99,6 @@ class Ship(object):
             
     # Blits image on to screen
     def draw(self, screen):
-        print ("Self.image:", end='')
-        print (self.image)
         screen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
             
 #class Projectile(object):
