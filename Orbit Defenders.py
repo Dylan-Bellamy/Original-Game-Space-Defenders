@@ -34,6 +34,10 @@ from Obstacles import obstacle
 from Obstacles import Enemy
 from Obstacles import Enemy2
 
+startButton = pygame.image.load(("Images//Start Button.png"))
+startButton = pygame.transform.smoothscale(startButton, (150, 120))
+startButton2 = pygame.image.load(("Images//Start Button2.png"))
+startButton2 = pygame.transform.smoothscale(startButton2, (150, 120))
 explosion = [pygame.image.load(("Images//Explosions//Red//48px//1.png")),
              pygame.image.load(("Images//Explosions//Red//48px//2.png")),
              pygame.image.load(("Images//Explosions//Red//48px//3.png")),
@@ -59,11 +63,47 @@ meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")
 
 
 #SHOT = pygame.image.load[(("Images//Shot1.png")),
-#                         (("Images//Shot2.png"))]
-                        # (("Images//Shot3.png"))
-                        # (("Images//Shot4.png"))
-                         #(("Images//Shot5.png"))]
+#                         (("Images//Shot2.png")),
+#                         (("Images//Shot3.png")),
+#                         (("Images//Shot4.png")),
+#                         (("Images//Shot5.png"))]
 
+def start():
+    #-----------------------------Setup------------------------------------------------------#    
+    pygame.init()
+    #-----------------------------Program Variable Initialization----------------------------#  
+    
+    
+    #-----------------------------Start Loop---------------------------------------------#  
+    while True:
+        
+        #-----------------------------Event Handling-----------------------------------------#                  
+            ev = pygame.event.poll()     # Look for any event
+            if ev.type == pygame.QUIT:   # Window close button clicked?
+                break            # Exit from program
+              
+            # Checks if the mouse has been clicked
+            if ev.type == pygame.MOUSEBUTTONDOWN: 
+              
+                # If the button is clicked, then it will start the game (main())
+                if 182 <= mouse[0] <= 301 and 144 <= mouse[1] <= 210:
+                    main()
+                    
+                # If the button is clicked, then it will bring up the controls screen (controls())
+                #if screenWidth/3 <= mouse[0] <= screenWidth/3+366 and screenHeight/2 <= mouse[1] <= screenHeight/2+75:
+                 #   controls()
+            
+        #-----------------------------Start Screen Logic---------------------------------------------#                    
+            screen.fill((0,0,0))  # Fills the screen with black
+      
+        
+            mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
+            print(mouse)
+            #-----------------------------Drawing Everything-------------------------------------#
+            screen.blit(startButton, (170,120))
+      
+            # Updates frames
+            pygame.display.update()
 
 def main():
     #-----------------------------Setup------------------------------------------------------#
@@ -71,7 +111,7 @@ def main():
 
     
     #-----------------------------Program Variable Initialization----------------------------#
-    global xPosBackground, yPosBackground, gameSpeed
+    global xPosBackground, yPosBackground, gameSpeed, obstacles
     gameSpeed = 5
     user = Ship()
     obstacles = []
@@ -140,4 +180,4 @@ def main():
 
     pygame.quit()     # Once we leave the loop, close the window.
 
-main()
+start()

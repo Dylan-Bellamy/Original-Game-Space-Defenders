@@ -48,7 +48,7 @@ class Ship(object):
         
     def update(self, userInput):
         
-        if self.step_index >= 50:  # If step_index is greater or equal to 10
+        if self.step_index >= 20:  # If step_index is greater or equal to 10
             self.step_index = 0    # Then reset step_index's value to 0
         
         # If user
@@ -77,20 +77,20 @@ class Ship(object):
             self.left()
             
     def right(self):
-        self.image = self.right_img[self.step_index // 25] # Cycles through RIGHT list of images every 5 steps
+        self.image = self.right_img[self.step_index // 10] # Cycles through RIGHT list of images every 5 steps
         self.ship_rect.y += self.movementSpeed           # Increase the y-position of the spaceShip
         self.yPos = self.ship_rect.y
         self.step_index += 1                             # Adds one to or makes step_index equal to one
         
     def left(self):
-        self.image = self.left_img[self.step_index // 25] # Cycles through LEFT list of images every 5 steps    
+        self.image = self.left_img[self.step_index // 10] # Cycles through LEFT list of images every 5 steps    
         self.ship_rect.y -= self.movementSpeed           # Decrease the y-position of the spaceShip
         self.yPos = self.ship_rect.y
         self.step_index += 1                             # Adds one to or makes step_index equal to one
         
         
     def idle(self):
-        self.image = self.idle_img[self.step_index // 25] # Cycles through IDLE list of images every 5 steps
+        self.image = self.idle_img[self.step_index // 10] # Cycles through IDLE list of images every 5 steps
         self.ship_rect.y += self.movementSpeedIdle       # The y-position of the spaceShip is stationary
         self.yPos = self.ship_rect.y
         self.step_index += 1                             # Adds one to or makes step_index equal to one

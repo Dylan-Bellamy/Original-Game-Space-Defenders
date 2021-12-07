@@ -19,8 +19,9 @@ meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//6.png")),]
     
 class obstacle:   
-    global gameSpeed
+    global gameSpeed, obstacles
     gameSpeed = 5
+    obstacles = []
     
     # Initializing attributes of class
     def __init__(self, image, typeIn):
