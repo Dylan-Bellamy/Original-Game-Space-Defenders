@@ -35,9 +35,11 @@ from Obstacles import Enemy
 from Obstacles import Enemy2
 
 startButton = pygame.image.load(("Images//Start Button.png"))
-startButton = pygame.transform.smoothscale(startButton, (150, 120))
-startButton2 = pygame.image.load(("Images//Start Button2.png"))
-startButton2 = pygame.transform.smoothscale(startButton2, (150, 120))
+startButton = pygame.transform.smoothscale(startButton, (240, 120))
+exitButton = pygame.image.load(("Images//Exit Button.png"))
+exitButton = pygame.transform.smoothscale(exitButton, (180, 100))
+helpButton = pygame.image.load(("Images//Controls Button.png"))
+helpButton = pygame.transform.smoothscale(helpButton, (180, 100))
 explosion = [pygame.image.load(("Images//Explosions//Red//48px//1.png")),
              pygame.image.load(("Images//Explosions//Red//48px//2.png")),
              pygame.image.load(("Images//Explosions//Red//48px//3.png")),
@@ -80,18 +82,22 @@ def start():
         #-----------------------------Event Handling-----------------------------------------#                  
             ev = pygame.event.poll()     # Look for any event
             if ev.type == pygame.QUIT:   # Window close button clicked?
-                break            # Exit from program
+                quit()           # Exit from program
               
             # Checks if the mouse has been clicked
             if ev.type == pygame.MOUSEBUTTONDOWN: 
               
                 # If the button is clicked, then it will start the game (main())
-                if 182 <= mouse[0] <= 301 and 144 <= mouse[1] <= 210:
+                if 126 <= mouse[0] <= 356 and 118 <= mouse[1] <= 196:
                     main()
-                    
-                # If the button is clicked, then it will bring up the controls screen (controls())
-                #if screenWidth/3 <= mouse[0] <= screenWidth/3+366 and screenHeight/2 <= mouse[1] <= screenHeight/2+75:
-                 #   controls()
+                
+                #If the button is clicked, then it will exit the game (quit())
+                if 272 <= mouse[0] <= 446 and 146 <= mouse[1] <= 328:
+                    quit()
+                
+                #If the button is clicked, then it will bring up the controls screen (controls())
+                if 38 <= mouse[0] <= 202 and 248 <= mouse[1] <= 328:
+                    controls()
             
         #-----------------------------Start Screen Logic---------------------------------------------#                    
             screen.fill((0,0,0))  # Fills the screen with black
@@ -100,7 +106,9 @@ def start():
             mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
             print(mouse)
             #-----------------------------Drawing Everything-------------------------------------#
-            screen.blit(startButton, (170,120))
+            screen.blit(startButton, (122,100))
+            screen.blit(exitButton, (270,240))
+            screen.blit(helpButton, (30,240))
       
             # Updates frames
             pygame.display.update()
@@ -126,7 +134,7 @@ def main():
         #-----------------------------Event Handling-----------------------------------------#
         ev = pygame.event.poll()    # Look for any event
         if ev.type == pygame.QUIT:  # Window close button clicked?
-            break                   #   ... leave game loop
+            quit()                  #   ... leave game loop
         
         def background():
             global xPosBackground, yPosBackground
@@ -178,6 +186,6 @@ def main():
         clock.tick(60) #Force frame rate to be slower
         #print(deathCount)
 
-    pygame.quit()     # Once we leave the loop, close the window.
+
 
 start()
