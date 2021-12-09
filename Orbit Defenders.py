@@ -22,7 +22,7 @@ import time
 """ Set up the game and run the main game loop """
 pygame.init()      # Prepare the pygame module for use
 screenHeight = 480 # Screen Height
-screenWidth = 480 # Screen Width
+screenWidth = 720 # Screen Width
 screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
     
 clock = pygame.time.Clock()  #Force frame rate to be slower
@@ -34,6 +34,8 @@ from Obstacles import obstacle
 from Obstacles import Enemy
 from Obstacles import Enemy2
 
+startBackGround = pygame.image.load(("Images//Start Background.jpg"))
+startBackGround = pygame.transform.smoothscale(startBackGround, (screenWidth, screenHeight))
 startButton = pygame.image.load(("Images//Start Button.png"))
 startButton = pygame.transform.smoothscale(startButton, (240, 120))
 exitButton = pygame.image.load(("Images//Exit Button.png"))
@@ -101,7 +103,7 @@ def start():
             
         #-----------------------------Start Screen Logic---------------------------------------------#                    
             screen.fill((0,0,0))  # Fills the screen with black
-      
+            screen.blit(startBackGround, (0,0))
         
             mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
             print(mouse)
@@ -109,7 +111,7 @@ def start():
             screen.blit(startButton, (122,100))
             screen.blit(exitButton, (270,240))
             screen.blit(helpButton, (30,240))
-      
+            
             # Updates frames
             pygame.display.update()
 

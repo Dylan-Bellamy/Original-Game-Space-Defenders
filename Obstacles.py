@@ -2,7 +2,7 @@ import pygame
 import random
 
 screenHeight = 480 # Screen Height
-screenWidth = 480 # Screen Width
+screenWidth = 720 # Screen Width
 screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
 
 meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
