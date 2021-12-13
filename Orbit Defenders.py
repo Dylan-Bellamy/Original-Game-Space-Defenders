@@ -34,6 +34,8 @@ from Obstacles import obstacle
 from Obstacles import Enemy
 from Obstacles import Enemy2
 
+startTitle = pygame.image.load(("Images//Title.png"))
+startTitle = pygame.transform.smoothscale(startTitle, (480, 180))
 startBackGround = pygame.image.load(("Images//Start Background.jpg"))
 startBackGround = pygame.transform.smoothscale(startBackGround, (screenWidth, screenHeight))
 startButton = pygame.image.load(("Images//Start Button.png"))
@@ -41,7 +43,7 @@ startButton = pygame.transform.smoothscale(startButton, (240, 120))
 exitButton = pygame.image.load(("Images//Exit Button.png"))
 exitButton = pygame.transform.smoothscale(exitButton, (180, 100))
 helpButton = pygame.image.load(("Images//Controls Button.png"))
-helpButton = pygame.transform.smoothscale(helpButton, (180, 100))
+helpButton = pygame.transform.smoothscale(helpButton, (185, 105))
 explosion = [pygame.image.load(("Images//Explosions//Red//48px//1.png")),
              pygame.image.load(("Images//Explosions//Red//48px//2.png")),
              pygame.image.load(("Images//Explosions//Red//48px//3.png")),
@@ -90,15 +92,15 @@ def start():
             if ev.type == pygame.MOUSEBUTTONDOWN: 
               
                 # If the button is clicked, then it will start the game (main())
-                if 126 <= mouse[0] <= 356 and 118 <= mouse[1] <= 196:
+                if 260 <= mouse[0] <= 466 and 120 <= mouse[1] <= 196:
                     main()
                 
                 #If the button is clicked, then it will exit the game (quit())
-                if 272 <= mouse[0] <= 446 and 146 <= mouse[1] <= 328:
+                if 410 <= mouse[0] <= 567 and 256 <= mouse[1] <= 318:
                     quit()
                 
                 #If the button is clicked, then it will bring up the controls screen (controls())
-                if 38 <= mouse[0] <= 202 and 248 <= mouse[1] <= 328:
+                if 165 <= mouse[0] <= 316 and 254 <= mouse[1] <= 320:
                     controls()
             
         #-----------------------------Start Screen Logic---------------------------------------------#                    
@@ -108,9 +110,10 @@ def start():
             mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
             print(mouse)
             #-----------------------------Drawing Everything-------------------------------------#
-            screen.blit(startButton, (122,100))
-            screen.blit(exitButton, (270,240))
-            screen.blit(helpButton, (30,240))
+            screen.blit(startButton, (245,100))
+            screen.blit(exitButton, (400,240))
+            screen.blit(helpButton, (150,234))
+            screen.blit(startTitle, (122,5))
             
             # Updates frames
             pygame.display.update()
