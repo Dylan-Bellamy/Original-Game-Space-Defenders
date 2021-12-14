@@ -44,14 +44,14 @@ exitButton = pygame.image.load(("Images//Exit Button.png"))
 exitButton = pygame.transform.smoothscale(exitButton, (180, 100))
 helpButton = pygame.image.load(("Images//Controls Button.png"))
 helpButton = pygame.transform.smoothscale(helpButton, (185, 105))
-explosion = [pygame.image.load(("Images//Explosions//Red//48px//1.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//2.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//3.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//4.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//5.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//6.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//7.png")),
-             pygame.image.load(("Images//Explosions//Red//48px//8.png"))]
+explosion = [pygame.image.load(("Images//Explosions//Red//64px//1.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//2.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//3.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//4.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//5.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//6.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//7.png")),
+             pygame.image.load(("Images//Explosions//Red//64px//8.png"))]
 backGround = pygame.image.load(("Images//background.jpg"))
 backGround = pygame.transform.smoothscale(backGround, (screenWidth, screenHeight))
 meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
@@ -166,12 +166,17 @@ def main():
             obstacle.draw(screen) # Draws Obstacles
             
             obstacle.update() # Updates Obstacle
-            if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
-                obstacles.pop()                 # Removes obstacle
-                #screen.blit(explosion, (xPos, yPos))
-                pygame.time.delay(3000) # Stops game for 3 seconds
-                deathCount += 1         # Adds or equals one to deathCount
+            if deathCount == 3:
                 endscreen(deathCount)   # Starts Endscreen
+            if (not obstacle.onScreen()):
+                obstacles.remove(obstacle)
+            if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
+                obstacles.remove(obstacle)                 # Removes obstacle
+        
+                screen.blit(explosion[3], (user.xPos+25, user.yPos-20))
+                time.sleep(1)
+                deathCount += 1         # Adds or equals one to deathCount
+
         
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
