@@ -174,7 +174,6 @@ def main():
                 obstacles.remove(obstacle)                 # Removes obstacle
         
                 screen.blit(explosion[3], (user.xPos+25, user.yPos-20))
-                time.sleep(1)
                 deathCount += 1         # Adds or equals one to deathCount
 
         
