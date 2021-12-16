@@ -33,6 +33,8 @@ from SpaceShip import Ship
 from Obstacles import obstacle
 from Obstacles import Enemy
 from Obstacles import Enemy2
+from Shoot import Shooting
+
 
 startTitle = pygame.image.load(("Images//Title.png"))
 startTitle = pygame.transform.smoothscale(startTitle, (480, 180))
@@ -68,11 +70,7 @@ meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//6.png")),]
 
 
-#SHOT = pygame.image.load[(("Images//Shot1.png")),
-#                         (("Images//Shot2.png")),
-#                         (("Images//Shot3.png")),
-#                         (("Images//Shot4.png")),
-#                         (("Images//Shot5.png"))]
+
 
 def start():
     #-----------------------------Setup------------------------------------------------------#    

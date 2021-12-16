@@ -33,8 +33,6 @@ class obstacle:
     # Update Function
     def update(self):
         self.rect.x -= gameSpeed            # Obstacle x-cord is being subtracted by the value of gameSpeed
-        #if self.rect.x < -self.rect.width:  # If the obstacle moves off the screen
-         #   obstacles.pop()                 # Removes obstacle 
 
     def onScreen(self):
         if self.rect.x <-self.rect.width:  # If the obstacle moves off the screen

@@ -101,6 +101,6 @@ class Ship(object):
     def draw(self, screen):
         screen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
             
-#class Projectile(object):
+
         
         
