@@ -5,7 +5,7 @@ screenHeight = 480 # Screen Height
 screenWidth = 720 # Screen Width
 screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
 
-SHOT = pygame.image.load[(("Images//Shot1.png")),
+SHOT = [pygame.image.load(("Images//Shot1.png")),
         pygame.image.load(("Images//Shot2.png")),
         pygame.image.load(("Images//Shot3.png")),
         pygame.image.load(("Images//Shot4.png")),
@@ -13,14 +13,15 @@ SHOT = pygame.image.load[(("Images//Shot1.png")),
 
 class Shooting():
     bulletSpeed = 12.5
-    self.step_index = 0                     # step_index starts at 0 and used to help animate Ship
-    def __init__(self,image):
-        self.image = image
+    step_index = 0                     # step_index starts at 0 and used to help animate Ship
+    
+    def __init__(self, userXpos, userYpos):
+        self.image = SHOT[0]
         self.rect = self.image.get_rect()
-        self.rect.x = user.xPos+5
-        
+        self.rect.x = userXpos
+        self.rect.y = userYpos
     def update(self):
-        self.image = self.image[self.step_index // 5] # Cycles through RIGHT list of images every 5 steps
+        self.image = self.image[self.step_index // 5] # Cycles through SHOT list of images every 5 steps
         self.rect.x += bulletSpeed   # Bullet's x-cord is being added on by bulletSpeed
         if self.step_idex == 26:
             self.step_index += 0     # step_index doesn't change
@@ -29,7 +30,7 @@ class Shooting():
         
         
     def onScreen2(self):
-        if self.rect.x <+self.rect.width:  # If the obstacle moves off the screen
+        if self.rect.x <-self.rect.width:  # If the obstacle moves off the screen
             return False
         else:
             return True

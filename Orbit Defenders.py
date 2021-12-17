@@ -125,11 +125,12 @@ def main():
     global xPosBackground, yPosBackground, gameSpeed, obstacles
     gameSpeed = 5
     user = Ship()
+    bullet = Shooting(160,user.yPos)
     obstacles = []
     deathCount = 0
     xPosBackground = 0
     yPosBackground = 0
-
+    
 
     #-----------------------------Main Game Loop---------------------------------------------#
     while True:
@@ -139,6 +140,8 @@ def main():
         if ev.type == pygame.QUIT:  # Window close button clicked?
             quit()                  #   ... leave game loop
         
+        userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
+
         def background():
             global xPosBackground, yPosBackground
             image_width = backGround.get_width()                                        # Gets and Sets width of Image
@@ -170,11 +173,19 @@ def main():
                 obstacles.remove(obstacle)
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
-        
+                user.remove(object)
                 screen.blit(explosion[3], (user.xPos+25, user.yPos-20))
                 deathCount += 1         # Adds or equals one to deathCount
 
-        
+        if userInput[pygame.K_SPACE]:
+            bullet.draw(screen)  # Draws Shooting
+            
+            bullet.update() # Runs Update Code
+            if (not obstacle.onScreen()):
+                obstacles.remove(obstacle)
+                
+            
+            
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
