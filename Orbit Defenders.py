@@ -46,6 +46,8 @@ exitButton = pygame.image.load(("Images//Exit Button.png"))
 exitButton = pygame.transform.smoothscale(exitButton, (180, 100))
 helpButton = pygame.image.load(("Images//Controls Button.png"))
 helpButton = pygame.transform.smoothscale(helpButton, (185, 105))
+backButton = pygame.image.load(("Images//Back Button.png"))
+backButton = pygame.transform.smoothscale(backButton, (60, 60))
 explosion = [pygame.image.load(("Images//Explosions//Red//64px//1.png")),
              pygame.image.load(("Images//Explosions//Red//64px//2.png")),
              pygame.image.load(("Images//Explosions//Red//64px//3.png")),
@@ -56,6 +58,8 @@ explosion = [pygame.image.load(("Images//Explosions//Red//64px//1.png")),
              pygame.image.load(("Images//Explosions//Red//64px//8.png"))]
 backGround = pygame.image.load(("Images//background.jpg"))
 backGround = pygame.transform.smoothscale(backGround, (screenWidth, screenHeight))
+helpBackGround = pygame.image.load(("Images//Controls Background.jpg"))
+helpBackGround = pygame.transform.smoothscale(helpBackGround,(screenWidth, screenHeight))
 meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
              pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//2.png")),
              pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//3.png")),
@@ -112,6 +116,39 @@ def start():
             screen.blit(exitButton, (400,240))
             screen.blit(helpButton, (150,234))
             screen.blit(startTitle, (122,5))
+            
+            # Updates frames
+            pygame.display.update()
+
+def controls():
+    #-----------------------------Setup------------------------------------------------------#    
+    pygame.init()
+    #-----------------------------Program Variable Initialization----------------------------#  
+    
+    
+    #-----------------------------Start Loop---------------------------------------------#  
+    while True:
+        
+        #-----------------------------Event Handling-----------------------------------------#                  
+            ev = pygame.event.poll()     # Look for any event
+            if ev.type == pygame.QUIT:   # Window close button clicked?
+                quit()           # Exit from program
+              
+            # Checks if the mouse has been clicked
+            if ev.type == pygame.MOUSEBUTTONDOWN: 
+              
+                #If the button is clicked, it will go back to the start screen (start())
+                if 8 <= mouse[0] <= 70 and 406 <= mouse[1] <= 468:
+                    start()
+            
+        #-----------------------------Start Screen Logic---------------------------------------------#                    
+            screen.fill((0,0,0))  # Fills the screen with black
+            screen.blit(helpBackGround, (0,0))
+            screen.blit(backButton, (10, 410))
+        
+            mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
+            print(mouse)
+            #-----------------------------Drawing Everything-------------------------------------#
             
             # Updates frames
             pygame.display.update()
