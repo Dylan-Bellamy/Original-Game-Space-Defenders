@@ -35,7 +35,14 @@ from Obstacles import Enemy
 from Obstacles import Enemy2
 from Shoot import Shooting
 
-
+fullLives = pygame.image.load(("Images//Full Hearts.png"))
+fullLives = pygame.transform.smoothscale(fullLives, (120, 40))
+twoLives = pygame.image.load(("Images//2 Hearts.png"))
+twoLives = pygame.transform.smoothscale(twoLives, (120, 40))
+oneLive = pygame.image.load(("Images//1 Heart.png"))
+oneLive = pygame.transform.smoothscale(oneLive, (120, 40))
+zeroLives = pygame.image.load(("Images//0 Hearts.png"))
+zeroLives = pygame.transform.smoothscale(zeroLives, (120, 40))
 startTitle = pygame.image.load(("Images//Title.png"))
 startTitle = pygame.transform.smoothscale(startTitle, (480, 180))
 startBackGround = pygame.image.load(("Images//Start Background.jpg"))
@@ -159,7 +166,7 @@ def main():
 
     
     #-----------------------------Program Variable Initialization----------------------------#
-    global xPosBackground, yPosBackground, gameSpeed, obstacles
+    global xPosBackground, yPosBackground, gameSpeed, obstacles, points
     gameSpeed = 5
     user = Ship()
     bullet = Shooting(160,user.yPos)
@@ -167,7 +174,9 @@ def main():
     deathCount = 0
     xPosBackground = 0
     yPosBackground = 0
-    
+    points = 0
+    font = pygame.font.Font('freesansbold.ttf', 20)
+    timer = pygame.time.Clock().get_time()
 
     #-----------------------------Main Game Loop---------------------------------------------#
     while True:
@@ -178,7 +187,19 @@ def main():
             quit()                  #   ... leave game loop
         
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
+        
+        def score():
+            global points, gameSpeed
+            if timer == 1000:
+                points += 1              # Everytime the function is called add one to or make points equal to one
+                if points % 60 == 0:     # Every 60 points / 60 seconds / 1 minute
+                    gameSpeed += 0.25    # gameSpeed is increased by 0.25
 
+            text = font.render("Time Alive: " + str(points), True, (255, 255, 255)) # Display "Score" and number of points on screen
+            textRect = text.get_rect()                                   # Gets cooridinates of text
+            textRect.center = (630, 30)                                 # Sets text rectangle to the top corner of the screen
+            screen.blit(text, textRect)                                  # Blits score on screen
+        
         def background():
             global xPosBackground, yPosBackground
             image_width = backGround.get_width()                                        # Gets and Sets width of Image
@@ -190,14 +211,42 @@ def main():
         # Update your game objects and data structures here...
         screen.fill((0, 0, 0))
         background() # Calls background function
-
-        # If amount obstacles is equal to 0 then it randomly picks a smallCactus, largeCactus, or bird and appends them to the obstactles list
     
+        # If deathCount is equal to 0 print fullLives on screen
+        if deathCount == 0:
+            screen.blit(fullLives, (10, 10))
+            
+        # If deathCount is equal to 1 print twoLives on screen
+        if deathCount == 1:
+            screen.blit(twoLives, (10, 10))
+            
+        # If deathCount is equal to 2 print oneLive on screen
+        if deathCount == 2:
+            screen.blit(oneLive, (10, 10))
+            
+        # If deathCount is equal to 3 print zeroLives on screen
+        if deathCount == 3:
+            screen.blit(zeroLives, (10, 10))
+        
+        # If amount obstacles is equal to 0 then it randomly picks an enemy and appends them to the obstactles list
         if len(obstacles) == 0:
             if random.randint(0, 1) == 0:
                 obstacles.append(Enemy(meteorOne))
             elif random.randint(0, 1) == 1:
                 obstacles.append(Enemy2(meteorTwo))
+        
+        if len(obstacles) == 1:
+            if random.randint(0, 1) == 0:
+                obstacles.append(Enemy(meteorOne))
+            elif random.randint(0, 1) == 1:
+                obstacles.append(Enemy2(meteorTwo))
+        
+        if deathCount == 1:       
+            if len(obstacles) == 2:
+                if random.randint(0, 1) == 0:
+                    obstacles.append(Enemy(meteorOne))
+                elif random.randint(0, 1) == 1:
+                    obstacles.append(Enemy2(meteorTwo))
             
         
         for obstacle in obstacles:
@@ -210,8 +259,8 @@ def main():
                 obstacles.remove(obstacle)
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
-                user.remove(object)
-                screen.blit(explosion[3], (user.xPos+25, user.yPos-20))
+                #user.remove
+                screen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
                 deathCount += 1         # Adds or equals one to deathCount
 
         if userInput[pygame.K_SPACE]:
@@ -219,14 +268,15 @@ def main():
             
             bullet.update() # Runs Update Code
             if (not obstacle.onScreen()):
-                obstacles.remove(obstacle)
-                
-            
+                obstacles.remove(obstacle) # Removes obstacle
+
+        
             
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
         
+        score()
         
         clock.tick(30)  #Force frame rate to be slower
         pygame.display.update()
@@ -238,7 +288,7 @@ def main():
         # Now the surface is ready, tell pygame to display it!
         pygame.display.flip()
         
-        clock.tick(60) #Force frame rate to be slower
+        
         #print(deathCount)
 
 
