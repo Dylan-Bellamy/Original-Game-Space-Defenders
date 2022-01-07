@@ -24,7 +24,7 @@ LEFT = [pygame.image.load(("Images//Ships//1//Pattern1//Red//Right//1.png")),
 
 class Ship(object):
     xPos = 120
-    yPos = 240
+    yPos = 120
     movementSpeed = 5
     movementSpeedIdle = 0
     userInput = pygame.key.get_pressed()    # Gets the state of all keyboard buttons
@@ -98,8 +98,8 @@ class Ship(object):
             
             
     # Blits image on to screen
-    def draw(self, screen):
-        screen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
+    def draw(self, gameScreen):
+        gameScreen.blit(self.image, (self.ship_rect.x, self.ship_rect.y))
             
 
         

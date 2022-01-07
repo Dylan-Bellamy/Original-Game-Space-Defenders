@@ -1,9 +1,9 @@
 import pygame
 import random
 
-screenHeight = 480 # Screen Height
-screenWidth = 720 # Screen Width
-screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
+screenHeight2 = 360 # Screen Height
+screenWidth2 = 720 # Screen Width
+gameScreen = pygame.display.set_mode((screenWidth2, screenHeight2))  # Initializing screen for display
 
 SHOT = [pygame.image.load(("Images//Shot1.png")),
         pygame.image.load(("Images//Shot2.png")),
@@ -35,5 +35,5 @@ class Shooting():
         else:
             return True
     # Blits image on to screen
-    def draw(self,screen):
-        screen.blit(self.image, self.rect)
+    def draw(self,gameScreen):
+        gameScreen.blit(self.image, self.rect)

@@ -21,11 +21,17 @@ import time
 
 """ Set up the game and run the main game loop """
 pygame.init()      # Prepare the pygame module for use
-screenHeight = 480 # Screen Height
+screenHeight = 360 # Screen Height
 screenWidth = 720 # Screen Width
 screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
+
+screenWidth2 = 720
+screenHeight2 = 360
+gameScreen = pygame.display.set_mode((screenWidth2, screenHeight2))  # Initializing gameScreen for display
     
 clock = pygame.time.Clock()  #Force frame rate to be slower
+
+startTicks = pygame.time.get_ticks()
 
 
 
@@ -46,7 +52,7 @@ zeroLives = pygame.transform.smoothscale(zeroLives, (120, 40))
 startTitle = pygame.image.load(("Images//Title.png"))
 startTitle = pygame.transform.smoothscale(startTitle, (480, 180))
 startBackGround = pygame.image.load(("Images//Start Background.jpg"))
-startBackGround = pygame.transform.smoothscale(startBackGround, (screenWidth, screenHeight))
+startBackGround = pygame.transform.smoothscale(startBackGround, (screenWidth, 480))
 startButton = pygame.image.load(("Images//Start Button.png"))
 startButton = pygame.transform.smoothscale(startButton, (240, 120))
 exitButton = pygame.image.load(("Images//Exit Button.png"))
@@ -54,7 +60,7 @@ exitButton = pygame.transform.smoothscale(exitButton, (180, 100))
 helpButton = pygame.image.load(("Images//Controls Button.png"))
 helpButton = pygame.transform.smoothscale(helpButton, (185, 105))
 backButton = pygame.image.load(("Images//Back Button.png"))
-backButton = pygame.transform.smoothscale(backButton, (60, 60))
+backButton = pygame.transform.smoothscale(backButton, (45, 45))
 explosion = [pygame.image.load(("Images//Explosions//Red//64px//1.png")),
              pygame.image.load(("Images//Explosions//Red//64px//2.png")),
              pygame.image.load(("Images//Explosions//Red//64px//3.png")),
@@ -64,7 +70,7 @@ explosion = [pygame.image.load(("Images//Explosions//Red//64px//1.png")),
              pygame.image.load(("Images//Explosions//Red//64px//7.png")),
              pygame.image.load(("Images//Explosions//Red//64px//8.png"))]
 backGround = pygame.image.load(("Images//background.jpg"))
-backGround = pygame.transform.smoothscale(backGround, (screenWidth, screenHeight))
+backGround = pygame.transform.smoothscale(backGround, (screenWidth2, screenHeight2))
 helpBackGround = pygame.image.load(("Images//Controls Background.jpg"))
 helpBackGround = pygame.transform.smoothscale(helpBackGround,(screenWidth, screenHeight))
 meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
@@ -145,13 +151,13 @@ def controls():
             if ev.type == pygame.MOUSEBUTTONDOWN: 
               
                 #If the button is clicked, it will go back to the start screen (start())
-                if 8 <= mouse[0] <= 70 and 406 <= mouse[1] <= 468:
+                if 10 <= mouse[0] <= 55 and 305 <= mouse[1] <= 350:
                     start()
             
         #-----------------------------Start Screen Logic---------------------------------------------#                    
             screen.fill((0,0,0))  # Fills the screen with black
             screen.blit(helpBackGround, (0,0))
-            screen.blit(backButton, (10, 410))
+            screen.blit(backButton, (10, 305))
         
             mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
             print(mouse)
@@ -167,7 +173,7 @@ def main():
     
     #-----------------------------Program Variable Initialization----------------------------#
     global xPosBackground, yPosBackground, gameSpeed, obstacles, points
-    gameSpeed = 5
+    gameSpeed = 3.5
     user = Ship()
     bullet = Shooting(160,user.yPos)
     obstacles = []
@@ -176,7 +182,7 @@ def main():
     yPosBackground = 0
     points = 0
     font = pygame.font.Font('freesansbold.ttf', 20)
-    timer = pygame.time.Clock()
+    
 
     #-----------------------------Main Game Loop---------------------------------------------#
     while True:
@@ -190,43 +196,42 @@ def main():
         
         def score():
             global points, gameSpeed
-            if timer.get_time() == 1000:
-                points += 1              # Everytime the function is called add one to or make points equal to one
-                if points % 60 == 0:     # Every 60 points / 60 seconds / 1 minute
+            seconds = (pygame.time.get_ticks() - startTicks) / 1000   
+            if seconds % 60 == 0:
                     gameSpeed += 0.25    # gameSpeed is increased by 0.25
 
-            text = font.render("Time Alive: " + str(points), True, (255, 255, 255)) # Display "Score" and number of points on screen
-            textRect = text.get_rect()                                   # Gets cooridinates of text
-            textRect.center = (630, 30)                                 # Sets text rectangle to the top corner of the screen
-            screen.blit(text, textRect)                                  # Blits score on screen
+            text = font.render("Seconds Alive: " + str(seconds), True, (255, 255, 255)) # Display "Seconds Alive" and number of points on screen
+            textRect = text.get_rect()        # Gets cooridinates of text
+            textRect.center = (605, 30)       # Sets text rectangle to the top corner of the screen
+            gameScreen.blit(text, textRect)       # Blits seconds Alive on screen
         
         def background():
             global xPosBackground, yPosBackground
             image_width = backGround.get_width()                                        # Gets and Sets width of Image
-            screen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
+            gameScreen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
             
 
 
         #-----------------------------Game Logic---------------------------------------------#
         # Update your game objects and data structures here...
-        screen.fill((0, 0, 0))
+        gameScreen.fill((0, 0, 0))
         background() # Calls background function
     
         # If deathCount is equal to 0 print fullLives on screen
         if deathCount == 0:
-            screen.blit(fullLives, (10, 10))
+            gameScreen.blit(fullLives, (10, 10))
             
         # If deathCount is equal to 1 print twoLives on screen
         if deathCount == 1:
-            screen.blit(twoLives, (10, 10))
+            gameScreen.blit(twoLives, (10, 10))
             
         # If deathCount is equal to 2 print oneLive on screen
         if deathCount == 2:
-            screen.blit(oneLive, (10, 10))
+            gameScreen.blit(oneLive, (10, 10))
             
         # If deathCount is equal to 3 print zeroLives on screen
         if deathCount == 3:
-            screen.blit(zeroLives, (10, 10))
+            gameScreen.blit(zeroLives, (10, 10))
         
         # If amount obstacles is equal to 0 then it randomly picks an enemy and appends them to the obstactles list
         if len(obstacles) == 0:
@@ -250,7 +255,7 @@ def main():
             
         
         for obstacle in obstacles:
-            obstacle.draw(screen) # Draws Obstacles
+            obstacle.draw(gameScreen) # Draws Obstacles
             
             obstacle.update() # Updates Obstacle
             if deathCount == 3:
@@ -260,18 +265,18 @@ def main():
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
                 #user.remove
-                screen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
+                gameScreen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
                 deathCount += 1         # Adds or equals one to deathCount
 
         if userInput[pygame.K_SPACE]:
-            bullet.draw(screen)  # Draws Shooting
+            bullet.draw(gameScreen)  # Draws Shooting
             
             bullet.update() # Runs Update Code
             if (not obstacle.onScreen()):
                 obstacles.remove(obstacle) # Removes obstacle
 
         
-            
+        
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
@@ -281,10 +286,10 @@ def main():
         clock.tick(30)  #Force frame rate to be slower
         pygame.display.update()
                
-        user.draw(screen) # Draws spaceShip on screen
+        user.draw(gameScreen) # Draws spaceShip on screen
         user.update(userInput) # Updates spaceShip on screen when needed
         
-
+        
         # Now the surface is ready, tell pygame to display it!
         pygame.display.flip()
         

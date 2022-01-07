@@ -1,9 +1,9 @@
 import pygame
 import random
 
-screenHeight = 480 # Screen Height
-screenWidth = 720 # Screen Width
-screen = pygame.display.set_mode((screenWidth, screenHeight))  # Initializing screen for display
+screenHeight2 = 360 # Screen Height
+screenWidth2 = 720 # Screen Width
+gameScreen = pygame.display.set_mode((screenWidth2, screenHeight2))  # Initializing screen for display
 
 meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
              pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//2.png")),
@@ -20,7 +20,7 @@ meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")
     
 class obstacle:   
     global gameSpeed, obstacles
-    gameSpeed = 5
+    gameSpeed = 3.5
     obstacles = []
     
     # Initializing attributes of class
@@ -28,7 +28,7 @@ class obstacle:
         self.image = image                            # First Arguement
         self.type = typeIn                            # Second Arguement
         self.rect = self.image [self.typeIn].get_rect() # Gets rectangle of image that going to be displayed
-        self.rect.x = screenWidth                    # Obstacles are created on the Right of the screen
+        self.rect.x = screenWidth2                    # Obstacles are created on the Right of the screen
 
     # Update Function
     def update(self):
@@ -40,8 +40,8 @@ class obstacle:
         else:
             return True
     # Blits image on to screen
-    def draw(self,screen):
-        screen.blit(self.image[self.type], self.rect)
+    def draw(self,gameScreen):
+        gameScreen.blit(self.image[self.type], self.rect)
         
 class Enemy(obstacle):
     
@@ -50,7 +50,7 @@ class Enemy(obstacle):
         self.image = image   
         self.typeIn = random.randint(0, 5)
         super().__init__(image, self.typeIn)
-        self.rect.y = random.randint(25, 455)
+        self.rect.y = random.randint(25, 325)
 
 
 class Enemy2(obstacle):
@@ -60,5 +60,5 @@ class Enemy2(obstacle):
         self.image = image   
         self.typeIn = random.randint(0, 5)
         super().__init__(image, self.typeIn)
-        self.rect.y = random.randint(25, 455)
+        self.rect.y = random.randint(25, 325)
     
