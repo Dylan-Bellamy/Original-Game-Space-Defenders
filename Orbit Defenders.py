@@ -176,7 +176,7 @@ def main():
     yPosBackground = 0
     points = 0
     font = pygame.font.Font('freesansbold.ttf', 20)
-    timer = pygame.time.Clock().get_time()
+    timer = pygame.time.Clock()
 
     #-----------------------------Main Game Loop---------------------------------------------#
     while True:
@@ -190,7 +190,7 @@ def main():
         
         def score():
             global points, gameSpeed
-            if timer == 1000:
+            if timer.get_time() == 1000:
                 points += 1              # Everytime the function is called add one to or make points equal to one
                 if points % 60 == 0:     # Every 60 points / 60 seconds / 1 minute
                     gameSpeed += 0.25    # gameSpeed is increased by 0.25
