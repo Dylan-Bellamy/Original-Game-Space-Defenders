@@ -88,7 +88,53 @@ meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")
 
 
 
-
+def end(deathCount):
+    #-----------------------------Setup------------------------------------------------------#    
+    pygame.init()
+    
+    #-----------------------------Program Variable Initialization----------------------------#  
+    # Setting up fonts size
+    global xPosBackground, yPosBackground
+    xPosBackground = 0
+    yPosBackground = 0 
+    font = pygame.font.Font('freesansbold.ttf', 30)
+    
+    
+    def background():
+            global xPosBackground, yPosBackground
+            image_width = backGround.get_width()                                        # Gets and Sets width of Image
+            gameScreen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
+            screen.blit(backGround, (image_width + xPosBackground, yPosBackground))     # Behind that Image we blit another one, becuase with out it there would be a gab after running out of background
+            if xPosBackground <= -image_width:                                  # If Background moves off screen
+                screen.blit(backGround, (image_width + xPosBackground, yPosBackground)) # Another background is made
+                xPosBackground = 0                                              # xPosBackground is reset to 0
+            xPosBackground -= gameSpeed                                         # Background x-cord is being subtracted by the value of gameSpeed
+    #-----------------------------Event Handling-----------------------------------------#
+    #screen.fill((0,0,0))  # Fills the screen with black
+    background()
+    
+    ev = pygame.event.poll()     # Look for any event
+    if ev.type == pygame.QUIT:   # Window close button clicked?        
+        quit()            # Exit for program
+    if ev.type == pygame.KEYDOWN:
+        main()
+    #-----------------------------End Screen Logic---------------------------------------------# 
+    # Rendering written font
+    text = font.render("Press any Key to Restart", True, (0, 255, 255))  
+    finalscore = font.render("How long you Lasted: " + str(seconds), True, (0, 255, 255))
+    
+    finalscoreRect = finalscore.get_rect()                                    # Takes Rectangle of "finalscore"
+    finalscoreRect.center = (screenWidth // 2, screenHeight // 2 + 50)   # Centers Rectangle of the screen and changes the height 
+    textRect = text.get_rect()                                      # Takes Rectangle of "text"
+    textRect.center = (screenWidth // 2, screenHeight // 2)         # Centers Rectangle of the screen 
+    
+    #-----------------------------Drawing Everything-------------------------------------#
+    screen.blit(text, textRect)  # Draws text 
+    screen.blit(finalscore, finalscoreRect) # Draws finalscore
+    #pygame.time.wait(100000)
+    pygame.display.update() # Updates display
+    
+    
 def start():
     #-----------------------------Setup------------------------------------------------------#    
     pygame.init()
@@ -172,7 +218,7 @@ def main():
 
     
     #-----------------------------Program Variable Initialization----------------------------#
-    global xPosBackground, yPosBackground, gameSpeed, obstacles, points
+    global xPosBackground, yPosBackground, gameSpeed, obstacles, points, seconds
     gameSpeed = 3.5
     user = Ship()
     bullet = Shooting(160,user.yPos)
@@ -182,6 +228,7 @@ def main():
     yPosBackground = 0
     points = 0
     font = pygame.font.Font('freesansbold.ttf', 20)
+    seconds = (pygame.time.get_ticks() - startTicks) / 1000
     
 
     #-----------------------------Main Game Loop---------------------------------------------#
@@ -195,8 +242,8 @@ def main():
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         
         def score():
-            global points, gameSpeed
-            seconds = (pygame.time.get_ticks() - startTicks) / 1000   
+            global points, gameSpeed, seconds
+            seconds = (pygame.time.get_ticks() - startTicks) / 1000 
             if seconds % 60 == 0:
                     gameSpeed += 0.25    # gameSpeed is increased by 0.25
 
@@ -209,6 +256,11 @@ def main():
             global xPosBackground, yPosBackground
             image_width = backGround.get_width()                                        # Gets and Sets width of Image
             gameScreen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
+            screen.blit(backGround, (image_width + xPosBackground, yPosBackground))     # Behind that Image we blit another one, becuase with out it there would be a gab after running out of background
+            if xPosBackground <= -image_width:                                  # If Background moves off screen
+                screen.blit(backGround, (image_width + xPosBackground, yPosBackground)) # Another background is made
+                xPosBackground = 0                                              # xPosBackground is reset to 0
+            xPosBackground -= gameSpeed                                         # Background x-cord is being subtracted by the value of gameSpeed
             
 
 
@@ -240,13 +292,14 @@ def main():
             elif random.randint(0, 1) == 1:
                 obstacles.append(Enemy2(meteorTwo))
         
+        # If amount obstacles is equal to 1 then it randomly picks an enemy and appends them to the obstactles list
         if len(obstacles) == 1:
             if random.randint(0, 1) == 0:
                 obstacles.append(Enemy(meteorOne))
             elif random.randint(0, 1) == 1:
                 obstacles.append(Enemy2(meteorTwo))
         
-        if deathCount == 1:       
+        if seconds % 300 == 0:       # Doesn't Work
             if len(obstacles) == 2:
                 if random.randint(0, 1) == 0:
                     obstacles.append(Enemy(meteorOne))
@@ -259,7 +312,7 @@ def main():
             
             obstacle.update() # Updates Obstacle
             if deathCount == 3:
-                endscreen(deathCount)   # Starts Endscreen
+                end(deathCount)   # Starts Endscreen
             if (not obstacle.onScreen()):
                 obstacles.remove(obstacle)
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
