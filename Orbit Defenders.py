@@ -268,7 +268,9 @@ def main():
         # Update your game objects and data structures here...
         gameScreen.fill((0, 0, 0))
         background() # Calls background function
-    
+        
+        user.draw(gameScreen) # Draws spaceShip on screen
+        user.update(userInput) # Updates spaceShip on screen when needed
         # If deathCount is equal to 0 print fullLives on screen
         if deathCount == 0:
             gameScreen.blit(fullLives, (10, 10))
@@ -299,7 +301,8 @@ def main():
             elif random.randint(0, 1) == 1:
                 obstacles.append(Enemy2(meteorTwo))
         
-        if seconds % 300 == 0:       # Doesn't Work
+        # If seconds is equal to 300 / 300 seconds / 5 minutes, then it randomly picks an enemy and appends them to the obstactles list
+        if seconds >= 300:      
             if len(obstacles) == 2:
                 if random.randint(0, 1) == 0:
                     obstacles.append(Enemy(meteorOne))
@@ -315,17 +318,17 @@ def main():
                 end(deathCount)   # Starts Endscreen
             if (not obstacle.onScreen()):
                 obstacles.remove(obstacle)
-            if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the dinosaur's rectangle
+            if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
                 #user.remove
                 gameScreen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
                 deathCount += 1         # Adds or equals one to deathCount
 
-        if userInput[pygame.K_SPACE]:
-            bullet.draw(gameScreen)  # Draws Shooting
+        if userInput[pygame.K_SPACE]: # If user presses spacebar on keyboard
+            bullet.draw(gameScreen)  # Draws Bullet on screen
             
             bullet.update() # Runs Update Code
-            if (not obstacle.onScreen()):
+            if (not obstacle.onScreen()):   # If obstacle is off screen
                 obstacles.remove(obstacle) # Removes obstacle
 
         
@@ -339,8 +342,7 @@ def main():
         clock.tick(30)  #Force frame rate to be slower
         pygame.display.update()
                
-        user.draw(gameScreen) # Draws spaceShip on screen
-        user.update(userInput) # Updates spaceShip on screen when needed
+        
         
         
         # Now the surface is ready, tell pygame to display it!
