@@ -16,17 +16,17 @@ class Shooting():
     step_index = 0                     # step_index starts at 0 and used to help animate Ship
     
     def __init__(self, userXpos, userYpos):
-        self.image = SHOT[0]
+        self.image = SHOT[4]
         self.rect = self.image.get_rect()
         self.rect.x = userXpos
         self.rect.y = userYpos
     def update(self):
-        self.image = self.image[self.step_index // 5] # Cycles through SHOT list of images every 5 steps
-        self.rect.x += bulletSpeed   # Bullet's x-cord is being added on by bulletSpeed
-        if self.step_idex == 26:
-            self.step_index += 0     # step_index doesn't change
-        else:
-            self.step_index += 1     # Adds one to or makes step_index equal to one
+        #self.image = SHOT[self.step_index // 5] # Cycles through SHOT list of images every 5 steps
+        self.rect.x += self.bulletSpeed   # Bullet's x-cord is being added on by bulletSpeed
+        #if self.step_index == 26:
+        #    self.step_index = 0     # step_index doesn't change
+        #else:
+        #self.step_index += 1     # Adds one to or makes step_index equal to one
         
         
     def onScreen2(self):

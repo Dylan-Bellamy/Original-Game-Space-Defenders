@@ -221,7 +221,7 @@ def main():
     global xPosBackground, yPosBackground, gameSpeed, obstacles, points, seconds
     gameSpeed = 3.5
     user = Ship()
-    bullet = Shooting(160,user.yPos)
+    bullet = Shooting(user.xPos, user.yPos)
     obstacles = []
     deathCount = 0
     xPosBackground = 0
@@ -271,6 +271,7 @@ def main():
         
         user.draw(gameScreen) # Draws spaceShip on screen
         user.update(userInput) # Updates spaceShip on screen when needed
+        
         # If deathCount is equal to 0 print fullLives on screen
         if deathCount == 0:
             gameScreen.blit(fullLives, (10, 10))
@@ -320,17 +321,23 @@ def main():
                 obstacles.remove(obstacle)
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
-                #user.remove
+                
                 gameScreen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
                 deathCount += 1         # Adds or equals one to deathCount
-
+            
+            if bullet.rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
+                obstacles.remove(obstacle)                 # Removes obstacle
+                
+                gameScreen.blit(explosion[3], (bullet.rect.x+25, bullet.rect.y-20)) # Makes an explosion when collison is present
+                
         if userInput[pygame.K_SPACE]: # If user presses spacebar on keyboard
             bullet.draw(gameScreen)  # Draws Bullet on screen
             
             bullet.update() # Runs Update Code
-            if (not obstacle.onScreen()):   # If obstacle is off screen
-                obstacles.remove(obstacle) # Removes obstacle
-
+            if (not bullet.onScreen2()):   # If obstacle is off screen
+                bullet.remove() # Removes bullet
+        
+        
         
         
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
