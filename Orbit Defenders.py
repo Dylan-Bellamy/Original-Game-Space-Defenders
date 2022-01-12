@@ -129,9 +129,9 @@ def end(deathCount):
     textRect.center = (screenWidth // 2, screenHeight // 2)         # Centers Rectangle of the screen 
     
     #-----------------------------Drawing Everything-------------------------------------#
+    finalTime = seconds
     screen.blit(text, textRect)  # Draws text 
     screen.blit(finalscore, finalscoreRect) # Draws finalscore
-    #pygame.time.wait(100000)
     pygame.display.update() # Updates display
     
     
@@ -166,15 +166,15 @@ def start():
             
         #-----------------------------Start Screen Logic---------------------------------------------#                    
             screen.fill((0,0,0))  # Fills the screen with black
-            screen.blit(startBackGround, (0,0))
+            screen.blit(startBackGround, (0,0))  # Prints StartBackGround
         
             mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
             print(mouse)
             #-----------------------------Drawing Everything-------------------------------------#
-            screen.blit(startButton, (245,100))
-            screen.blit(exitButton, (400,240))
-            screen.blit(helpButton, (150,234))
-            screen.blit(startTitle, (122,5))
+            screen.blit(startButton, (245,100))  # Prints StartButton
+            screen.blit(exitButton, (400,240))   # Prints ExitButton
+            screen.blit(helpButton, (150,234))   # Prints HelpButton
+            screen.blit(startTitle, (122,5))     # Prints StartTitle
             
             # Updates frames
             pygame.display.update()
@@ -302,8 +302,8 @@ def main():
             elif random.randint(0, 1) == 1:
                 obstacles.append(Enemy2(meteorTwo))
         
-        # If seconds is equal to 300 / 300 seconds / 5 minutes, then it randomly picks an enemy and appends them to the obstactles list
-        if seconds >= 300:      
+        # If seconds is equal to 180 / 180 seconds / 3 minutes, then it randomly picks an enemy and appends them to the obstactles list
+        if seconds >= 180:      
             if len(obstacles) == 2:
                 if random.randint(0, 1) == 0:
                     obstacles.append(Enemy(meteorOne))
@@ -331,11 +331,13 @@ def main():
                 gameScreen.blit(explosion[3], (bullet.rect.x+25, bullet.rect.y-20)) # Makes an explosion when collison is present
                 
         if userInput[pygame.K_SPACE]: # If user presses spacebar on keyboard
-            bullet.draw(gameScreen)  # Draws Bullet on screen
+            bullet.rect.x = user.xPos
+            bullet.rect.y = user.yPos
             
-            bullet.update() # Runs Update Code
-            if (not bullet.onScreen2()):   # If obstacle is off screen
-                bullet.remove() # Removes bullet
+        bullet.draw(gameScreen)  # Draws Bullet on screen
+        bullet.update() # Runs Update Code   
+            #if (not bullet.onScreen2()):   # If obstacle is off screen
+               # bullet.remove() # Removes bullet
         
         
         
@@ -344,7 +346,7 @@ def main():
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
         
-        score()
+        score()  # Starts score function
         
         clock.tick(30)  #Force frame rate to be slower
         pygame.display.update()

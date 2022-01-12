@@ -18,7 +18,7 @@ class Shooting():
     def __init__(self, userXpos, userYpos):
         self.image = SHOT[4]
         self.rect = self.image.get_rect()
-        self.rect.x = userXpos
+        self.rect.x = 1000
         self.rect.y = userYpos
     def update(self):
         #self.image = SHOT[self.step_index // 5] # Cycles through SHOT list of images every 5 steps

@@ -41,7 +41,7 @@ class Ship(object):
         self.ship_left = False 
         
         self.step_index = 0                     # step_index starts at 0 and used to help animate Ship
-        self.image = self.idle_img[0]  #[0]           # Initializing first image of spaceShip
+        self.image = self.idle_img[0]           # Initializing first image of spaceShip
         self.ship_rect = self.image.get_rect()  # Takes the rectangle of the spaceShip
         self.ship_rect.x = self.xPos            # Sets the x-cord of rectangle to the x-position
         self.ship_rect.y = self.yPos            # Sets the y-cord of rectangle to the y-position
@@ -51,19 +51,19 @@ class Ship(object):
         if self.step_index >= 20:  # If step_index is greater or equal to 10
             self.step_index = 0    # Then reset step_index's value to 0
         
-        # If user
+        # If user pressed up key, then ship_left is True
         if userInput[pygame.K_UP] or userInput[pygame.K_w] and not self.ship_left:
             self.ship_idle = False     
             self.ship_right = False
             self.ship_left = True
             
-        # If user 
+        # If user pressed down key, then ship_right is True
         elif userInput[pygame.K_DOWN] or userInput[pygame.K_s] and not self.ship_right:
             self.ship_idle = False
             self.ship_right = True
             self.ship_left = False
             
-        # If user hasn't pressed any key
+        # If user hasn't pressed any key, then ship_idle is True
         elif not (userInput[pygame.K_DOWN] or userInput[pygame.K_UP] or userInput[pygame.K_s] or userInput[pygame.K_w]):
             self.ship_idle = True
             self.ship_right = False
