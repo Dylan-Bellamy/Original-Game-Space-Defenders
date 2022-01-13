@@ -40,6 +40,7 @@ from Obstacles import obstacle
 from Obstacles import Enemy
 from Obstacles import Enemy2
 from Shoot import Shooting
+from Shoot import ShootingTwo
 
 fullLives = pygame.image.load(("Images//Full Hearts.png"))
 fullLives = pygame.transform.smoothscale(fullLives, (120, 40))
@@ -86,7 +87,26 @@ meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//5.png")),
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//6.png")),]
 
+def score():
+            global points, gameSpeed, seconds, font
+            seconds = (pygame.time.get_ticks() - startTicks) / 1000 
+            if seconds % 60 == 0:
+                    gameSpeed += 0.25    # gameSpeed is increased by 0.25
 
+            text = font.render("Seconds Alive: " + str(seconds), True, (255, 255, 255)) # Display "Seconds Alive" and number of points on screen
+            textRect = text.get_rect()        # Gets cooridinates of text
+            textRect.center = (605, 30)       # Sets text rectangle to the top corner of the screen
+            gameScreen.blit(text, textRect)       # Blits seconds Alive on screen
+            
+def background():
+            global xPosBackground, yPosBackground
+            image_width = backGround.get_width()                                        # Gets and Sets width of Image
+            gameScreen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
+            screen.blit(backGround, (image_width + xPosBackground, yPosBackground))     # Behind that Image we blit another one, becuase with out it there would be a gab after running out of background
+            if xPosBackground <= -image_width:                                  # If Background moves off screen
+                screen.blit(backGround, (image_width + xPosBackground, yPosBackground)) # Another background is made
+                xPosBackground = 0                                              # xPosBackground is reset to 0
+            xPosBackground -= gameSpeed                                         # Background x-cord is being subtracted by the value of gameSpeed
 
 def end(deathCount):
     #-----------------------------Setup------------------------------------------------------#    
@@ -100,15 +120,7 @@ def end(deathCount):
     font = pygame.font.Font('freesansbold.ttf', 30)
     
     
-    def background():
-            global xPosBackground, yPosBackground
-            image_width = backGround.get_width()                                        # Gets and Sets width of Image
-            gameScreen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
-            screen.blit(backGround, (image_width + xPosBackground, yPosBackground))     # Behind that Image we blit another one, becuase with out it there would be a gab after running out of background
-            if xPosBackground <= -image_width:                                  # If Background moves off screen
-                screen.blit(backGround, (image_width + xPosBackground, yPosBackground)) # Another background is made
-                xPosBackground = 0                                              # xPosBackground is reset to 0
-            xPosBackground -= gameSpeed                                         # Background x-cord is being subtracted by the value of gameSpeed
+    
     #-----------------------------Event Handling-----------------------------------------#
     #screen.fill((0,0,0))  # Fills the screen with black
     background()
@@ -120,8 +132,9 @@ def end(deathCount):
         main()
     #-----------------------------End Screen Logic---------------------------------------------# 
     # Rendering written font
+    global finalTime
     text = font.render("Press any Key to Restart", True, (0, 255, 255))  
-    finalscore = font.render("How long you Lasted: " + str(seconds), True, (0, 255, 255))
+    finalscore = font.render("How long you Lasted: " + str(finalTime), True, (0, 255, 255))
     
     finalscoreRect = finalscore.get_rect()                                    # Takes Rectangle of "finalscore"
     finalscoreRect.center = (screenWidth // 2, screenHeight // 2 + 50)   # Centers Rectangle of the screen and changes the height 
@@ -218,10 +231,11 @@ def main():
 
     
     #-----------------------------Program Variable Initialization----------------------------#
-    global xPosBackground, yPosBackground, gameSpeed, obstacles, points, seconds
+    global xPosBackground, yPosBackground, gameSpeed, obstacles, points, seconds, font
     gameSpeed = 3.5
     user = Ship()
     bullet = Shooting(user.xPos, user.yPos)
+    bulletTwo = ShootingTwo(user.xPos, user.yPos)
     obstacles = []
     deathCount = 0
     xPosBackground = 0
@@ -240,29 +254,6 @@ def main():
             quit()                  #   ... leave game loop
         
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
-        
-        def score():
-            global points, gameSpeed, seconds
-            seconds = (pygame.time.get_ticks() - startTicks) / 1000 
-            if seconds % 60 == 0:
-                    gameSpeed += 0.25    # gameSpeed is increased by 0.25
-
-            text = font.render("Seconds Alive: " + str(seconds), True, (255, 255, 255)) # Display "Seconds Alive" and number of points on screen
-            textRect = text.get_rect()        # Gets cooridinates of text
-            textRect.center = (605, 30)       # Sets text rectangle to the top corner of the screen
-            gameScreen.blit(text, textRect)       # Blits seconds Alive on screen
-        
-        def background():
-            global xPosBackground, yPosBackground
-            image_width = backGround.get_width()                                        # Gets and Sets width of Image
-            gameScreen.blit(backGround, (xPosBackground, yPosBackground))                   # Blits Image on screen
-            screen.blit(backGround, (image_width + xPosBackground, yPosBackground))     # Behind that Image we blit another one, becuase with out it there would be a gab after running out of background
-            if xPosBackground <= -image_width:                                  # If Background moves off screen
-                screen.blit(backGround, (image_width + xPosBackground, yPosBackground)) # Another background is made
-                xPosBackground = 0                                              # xPosBackground is reset to 0
-            xPosBackground -= gameSpeed                                         # Background x-cord is being subtracted by the value of gameSpeed
-            
-
 
         #-----------------------------Game Logic---------------------------------------------#
         # Update your game objects and data structures here...
@@ -302,8 +293,8 @@ def main():
             elif random.randint(0, 1) == 1:
                 obstacles.append(Enemy2(meteorTwo))
         
-        # If seconds is equal to 180 / 180 seconds / 3 minutes, then it randomly picks an enemy and appends them to the obstactles list
-        if seconds >= 180:      
+        # If seconds is equal to 60 / 60 seconds / 1 minute, then it randomly picks an enemy and appends them to the obstactles list
+        if seconds >= 60:      
             if len(obstacles) == 2:
                 if random.randint(0, 1) == 0:
                     obstacles.append(Enemy(meteorOne))
@@ -312,30 +303,50 @@ def main():
             
         
         for obstacle in obstacles:
+            global finalTime
             obstacle.draw(gameScreen) # Draws Obstacles
-            
             obstacle.update() # Updates Obstacle
+            
             if deathCount == 3:
                 end(deathCount)   # Starts Endscreen
-            if (not obstacle.onScreen()):
-                obstacles.remove(obstacle)
+                
+            if (not obstacle.onScreen()):  # Of obstacle is off screen
+                obstacles.remove(obstacle) # Removes Obstacle
+                deathCount += 1            # Adds or equals one to deathCount
+                
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
-                
+                finalTime = seconds
                 gameScreen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
-                deathCount += 1         # Adds or equals one to deathCount
+                deathCount += 1            # Adds or equals one to deathCount
             
             if bullet.rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
                 
                 gameScreen.blit(explosion[3], (bullet.rect.x+25, bullet.rect.y-20)) # Makes an explosion when collison is present
+            
+            if bulletTwo.rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
+                obstacles.remove(obstacle)                 # Removes obstacle
                 
-        if userInput[pygame.K_SPACE]: # If user presses spacebar on keyboard
-            bullet.rect.x = user.xPos
-            bullet.rect.y = user.yPos
+                gameScreen.blit(explosion[3], (bulletTwo.rect.x+25, bulletTwo.rect.y-20)) # Makes an explosion when collison is present
+            
+            if userInput[pygame.K_SPACE] and bullet.onScreen2() is True:
+                bullet.rect.x = user.xPos+27.5
+                bullet.rect.y = user.yPos+17.5
+            
+            if userInput[pygame.K_a] and bulletTwo.onScreen3() is True:
+                bulletTwo.rect.x = user.xPos+27.5
+                bulletTwo.rect.y = user.yPos+16.5
+        
+            
+        print(bulletTwo.onScreen3())
+                
             
         bullet.draw(gameScreen)  # Draws Bullet on screen
-        bullet.update() # Runs Update Code   
+        bullet.update() # Runs Update Code
+        bulletTwo.draw(gameScreen)  # Draws Bullet on screen
+        bulletTwo.update() # Runs Update Code
+        
             #if (not bullet.onScreen2()):   # If obstacle is off screen
                # bullet.remove() # Removes bullet
         
