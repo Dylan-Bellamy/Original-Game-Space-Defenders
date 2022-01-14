@@ -91,7 +91,7 @@ def score():
             global points, gameSpeed, seconds, font
             seconds = (pygame.time.get_ticks() - startTicks) / 1000 
             if seconds % 60 == 0:
-                    gameSpeed += 0.25    # gameSpeed is increased by 0.25
+                    gameSpeed += 0.1    # gameSpeed is increased by 0.1
 
             text = font.render("Seconds Alive: " + str(seconds), True, (255, 255, 255)) # Display "Seconds Alive" and number of points on screen
             textRect = text.get_rect()        # Gets cooridinates of text
@@ -130,6 +130,7 @@ def end(deathCount):
         quit()            # Exit for program
     if ev.type == pygame.KEYDOWN:
         main()
+        
     #-----------------------------End Screen Logic---------------------------------------------# 
     # Rendering written font
     global finalTime
@@ -263,6 +264,8 @@ def main():
         user.draw(gameScreen) # Draws spaceShip on screen
         user.update(userInput) # Updates spaceShip on screen when needed
         
+        
+            
         # If deathCount is equal to 0 print fullLives on screen
         if deathCount == 0:
             gameScreen.blit(fullLives, (10, 10))
@@ -322,8 +325,9 @@ def main():
             global finalTime
             obstacle.draw(gameScreen) # Draws Obstacles
             obstacle.update() # Updates Obstacle
+            finalTime = seconds
             
-            if deathCount == 3: # If deathCount is equal to 3 / All three lives have been lost
+            if deathCount >= 3: # If deathCount is equal to 3 / All three lives have been lost
                 end(deathCount)   # Start Endscreen
                 
             if (not obstacle.onScreen()):  # Of obstacle is off screen
@@ -332,7 +336,7 @@ def main():
                 
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
-                finalTime = seconds
+                
                 gameScreen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
                 deathCount += 1            # Adds or equals one to deathCount
             
@@ -347,17 +351,19 @@ def main():
                 gameScreen.blit(explosion[3], (bulletTwo.rect.x+25, bulletTwo.rect.y-20)) # Makes an explosion when collison is present
             
             # If user presses Spacebar and bullet1 is off screen, move bullet to posistions of spaceship
-            if userInput[pygame.K_SPACE] and bullet.onScreen2() is True:
+            if userInput[pygame.K_a] and bullet.onScreen2() is True:
                 bullet.rect.x = user.xPos+27.5
                 bullet.rect.y = user.yPos+17.5
+                print("Shooting Bullet 1")
             
             # If user presses Spacebar and bullet1 is on screen and bullet2 is off screen, move bulletwo to posistions of spaceship
-            if userInput[pygame.K_SPACE] and bullet.onScreen2() is False and bulletTwo.onScreen3() is True:
-                bulletTwo.rect.x = user.xPos+27.5
-                bulletTwo.rect.y = user.yPos+16.5
-        
+            if userInput[pygame.K_d] and bulletTwo.onScreen3() is True:
+                    bulletTwo.rect.x = user.xPos+27.5
+                    bulletTwo.rect.y = user.yPos+16.5
+                    print("Shooting Bullet 2")
             
-        print(bulletTwo.onScreen3())
+        
+        
                 
             
         bullet.draw(gameScreen)  # Draws Bullet on screen
@@ -374,7 +380,7 @@ def main():
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
-        
+
         score()  # Starts score function
         
         clock.tick(30)  #Force frame rate to be slower
