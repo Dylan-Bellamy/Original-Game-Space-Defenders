@@ -142,7 +142,7 @@ def end(deathCount):
     textRect.center = (screenWidth // 2, screenHeight // 2)         # Centers Rectangle of the screen 
     
     #-----------------------------Drawing Everything-------------------------------------#
-    finalTime = seconds
+    
     screen.blit(text, textRect)  # Draws text 
     screen.blit(finalscore, finalscoreRect) # Draws finalscore
     pygame.display.update() # Updates display
@@ -210,13 +210,13 @@ def controls():
             if ev.type == pygame.MOUSEBUTTONDOWN: 
               
                 #If the button is clicked, it will go back to the start screen (start())
-                if 10 <= mouse[0] <= 55 and 305 <= mouse[1] <= 350:
+                if 10 <= mouse[0] <= 55 and 10 <= mouse[1] <= 55:
                     start()
             
         #-----------------------------Start Screen Logic---------------------------------------------#                    
             screen.fill((0,0,0))  # Fills the screen with black
             screen.blit(helpBackGround, (0,0))
-            screen.blit(backButton, (10, 305))
+            screen.blit(backButton, (10, 10))
         
             mouse = pygame.mouse.get_pos()  # Stores the (x,y) coordinates of the mouse into the variable
             print(mouse)
@@ -231,7 +231,7 @@ def main():
 
     
     #-----------------------------Program Variable Initialization----------------------------#
-    global xPosBackground, yPosBackground, gameSpeed, obstacles, points, seconds, font
+    global xPosBackground, yPosBackground, gameSpeed, obstacles, points, seconds, font, finalTime
     gameSpeed = 3.5
     user = Ship()
     bullet = Shooting(user.xPos, user.yPos)
@@ -300,6 +300,22 @@ def main():
                     obstacles.append(Enemy(meteorOne))
                 elif random.randint(0, 1) == 1:
                     obstacles.append(Enemy2(meteorTwo))
+                    
+        # If seconds is equal to 120 / 120 seconds / 2 minutes, then it randomly picks an enemy and appends them to the obstactles list
+        if seconds >= 120:      
+            if len(obstacles) == 3:
+                if random.randint(0, 1) == 0:
+                    obstacles.append(Enemy(meteorOne))
+                elif random.randint(0, 1) == 1:
+                    obstacles.append(Enemy2(meteorTwo))
+        
+        # If seconds is equal to 180 / 180 seconds / 3 minutes, then it randomly picks an enemy and appends them to the obstactles list
+        if seconds >= 180:      
+            if len(obstacles) == 4:
+                if random.randint(0, 1) == 0:
+                    obstacles.append(Enemy(meteorOne))
+                elif random.randint(0, 1) == 1:
+                    obstacles.append(Enemy2(meteorTwo))
             
         
         for obstacle in obstacles:
@@ -307,8 +323,8 @@ def main():
             obstacle.draw(gameScreen) # Draws Obstacles
             obstacle.update() # Updates Obstacle
             
-            if deathCount == 3:
-                end(deathCount)   # Starts Endscreen
+            if deathCount == 3: # If deathCount is equal to 3 / All three lives have been lost
+                end(deathCount)   # Start Endscreen
                 
             if (not obstacle.onScreen()):  # Of obstacle is off screen
                 obstacles.remove(obstacle) # Removes Obstacle
@@ -330,11 +346,13 @@ def main():
                 
                 gameScreen.blit(explosion[3], (bulletTwo.rect.x+25, bulletTwo.rect.y-20)) # Makes an explosion when collison is present
             
+            # If user presses Spacebar and bullet1 is off screen, move bullet to posistions of spaceship
             if userInput[pygame.K_SPACE] and bullet.onScreen2() is True:
                 bullet.rect.x = user.xPos+27.5
                 bullet.rect.y = user.yPos+17.5
             
-            if userInput[pygame.K_a] and bulletTwo.onScreen3() is True:
+            # If user presses Spacebar and bullet1 is on screen and bullet2 is off screen, move bulletwo to posistions of spaceship
+            if userInput[pygame.K_SPACE] and bullet.onScreen2() is False and bulletTwo.onScreen3() is True:
                 bulletTwo.rect.x = user.xPos+27.5
                 bulletTwo.rect.y = user.yPos+16.5
         
