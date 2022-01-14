@@ -5,18 +5,7 @@ screenHeight2 = 360 # Screen Height
 screenWidth2 = 720 # Screen Width
 gameScreen = pygame.display.set_mode((screenWidth2, screenHeight2))  # Initializing screen for display
 
-meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//2.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//3.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//4.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//5.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//6.png")),]
-meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//2.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//3.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//4.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//5.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//6.png")),]
+
     
 class obstacle:   
     global gameSpeed, obstacles
@@ -48,7 +37,7 @@ class Enemy(obstacle):
     # Initializing attributes of class
     def __init__(self, image):
         self.image = image   
-        self.typeIn = random.randint(0, 5)
+        self.typeIn = random.randint(0, 3)
         super().__init__(image, self.typeIn)
         self.rect.y = random.randint(25, 325)
 
@@ -58,7 +47,26 @@ class Enemy2(obstacle):
     # Initializing attributes of class
     def __init__(self, image):
         self.image = image   
-        self.typeIn = random.randint(0, 5)
+        self.typeIn = random.randint(0, 3)
+        super().__init__(image, self.typeIn)
+        self.rect.y = random.randint(25, 325)
+        
+class Enemy3(obstacle):
+    
+    # Initializing attributes of class
+    def __init__(self, image):
+        self.image = image   
+        self.typeIn = random.randint(0, 3)
+        super().__init__(image, self.typeIn)
+        self.rect.y = random.randint(25, 325)
+        
+        
+class Enemy4(obstacle):
+    
+    # Initializing attributes of class
+    def __init__(self, image):
+        self.image = image   
+        self.typeIn = random.randint(0, 3)
         super().__init__(image, self.typeIn)
         self.rect.y = random.randint(25, 325)
     

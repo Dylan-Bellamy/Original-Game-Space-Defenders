@@ -39,6 +39,8 @@ from SpaceShip import Ship
 from Obstacles import obstacle
 from Obstacles import Enemy
 from Obstacles import Enemy2
+from Obstacles import Enemy3
+from Obstacles import Enemy4
 from Shoot import Shooting
 from Shoot import ShootingTwo
 
@@ -74,18 +76,22 @@ backGround = pygame.image.load(("Images//background.jpg"))
 backGround = pygame.transform.smoothscale(backGround, (screenWidth2, screenHeight2))
 helpBackGround = pygame.image.load(("Images//Controls Background.jpg"))
 helpBackGround = pygame.transform.smoothscale(helpBackGround,(screenWidth, screenHeight))
-meteorOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//1.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//2.png")),
-             pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//3.png")),
+enemyOne = [pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//3.png")),
              pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//4.png")),
              pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//5.png")),
              pygame.image.load(("Images//Ships//6//Pattern3//Yellow//Left//6.png")),]
-meteorTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//1.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//2.png")),
-             pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//3.png")),
+enemyTwo = [pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//3.png")),
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//4.png")),
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//5.png")),
              pygame.image.load(("Images//Ships//4//Pattern2//Blue//Left//6.png")),]
+enemyThree =[pygame.image.load(("Images//Ships//2//Pattern1//Green//Left//3.png")),
+             pygame.image.load(("Images//Ships//2//Pattern1//Green//Left//4.png")),
+             pygame.image.load(("Images//Ships//2//Pattern1//Green//Left//5.png")),
+             pygame.image.load(("Images//Ships//2//Pattern1//Green//Left//6.png")),]
+enemyFour =[pygame.image.load(("Images//Ships//5//Pattern3//Green//Left//3.png")),
+             pygame.image.load(("Images//Ships//5//Pattern3//Green//Left//4.png")),
+             pygame.image.load(("Images//Ships//5//Pattern3//Green//Left//5.png")),
+             pygame.image.load(("Images//Ships//5//Pattern3//Green//Left//6.png")),]
 
 def score():
             global points, gameSpeed, seconds, font
@@ -129,12 +135,14 @@ def end(deathCount):
     if ev.type == pygame.QUIT:   # Window close button clicked?        
         quit()            # Exit for program
     if ev.type == pygame.KEYDOWN:
+        seconds
         main()
         
     #-----------------------------End Screen Logic---------------------------------------------# 
     # Rendering written font
     global finalTime
-    text = font.render("Press any Key to Restart", True, (0, 255, 255))  
+    
+    text = font.render("Press w to Restart", True, (0, 255, 255))  
     finalscore = font.render("How long you Lasted: " + str(finalTime), True, (0, 255, 255))
     
     finalscoreRect = finalscore.get_rect()                                    # Takes Rectangle of "finalscore"
@@ -255,7 +263,7 @@ def main():
             quit()                  #   ... leave game loop
         
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
-
+        
         #-----------------------------Game Logic---------------------------------------------#
         # Update your game objects and data structures here...
         gameScreen.fill((0, 0, 0))
@@ -284,62 +292,82 @@ def main():
         
         # If amount obstacles is equal to 0 then it randomly picks an enemy and appends them to the obstactles list
         if len(obstacles) == 0:
-            if random.randint(0, 1) == 0:
-                obstacles.append(Enemy(meteorOne))
-            elif random.randint(0, 1) == 1:
-                obstacles.append(Enemy2(meteorTwo))
+            if random.randint(0, 3) == 0:
+                obstacles.append(Enemy(enemyOne))
+            if random.randint(0, 3) == 1:
+                obstacles.append(Enemy2(enemyTwo))
+            if random.randint(0, 3) == 2:
+                obstacles.append(Enemy3(enemyThree))
+            elif random.randint(0, 3) == 3:
+                obstacles.append(Enemy4(enemyFour))
         
         # If amount obstacles is equal to 1 then it randomly picks an enemy and appends them to the obstactles list
         if len(obstacles) == 1:
-            if random.randint(0, 1) == 0:
-                obstacles.append(Enemy(meteorOne))
-            elif random.randint(0, 1) == 1:
-                obstacles.append(Enemy2(meteorTwo))
+            if random.randint(0, 3) == 0:
+                obstacles.append(Enemy(enemyOne))
+            if random.randint(0, 3) == 1:
+                obstacles.append(Enemy2(enemyTwo))
+            if random.randint(0, 3) == 2:
+                obstacles.append(Enemy3(enemyThree))
+            elif random.randint(0, 3) == 3:
+                obstacles.append(Enemy4(enemyFour))
         
         # If seconds is equal to 60 / 60 seconds / 1 minute, then it randomly picks an enemy and appends them to the obstactles list
-        if seconds >= 60:      
+        if seconds >= 60:
             if len(obstacles) == 2:
-                if random.randint(0, 1) == 0:
-                    obstacles.append(Enemy(meteorOne))
-                elif random.randint(0, 1) == 1:
-                    obstacles.append(Enemy2(meteorTwo))
+                if random.randint(0, 3) == 0:
+                    obstacles.append(Enemy(enemyOne))
+                if random.randint(0, 3) == 1:
+                    obstacles.append(Enemy2(enemyTwo))
+                if random.randint(0, 3) == 2:
+                    obstacles.append(Enemy3(enemyThree))
+                elif random.randint(0, 3) == 3:
+                    obstacles.append(Enemy4(enemyFour))
                     
         # If seconds is equal to 120 / 120 seconds / 2 minutes, then it randomly picks an enemy and appends them to the obstactles list
         if seconds >= 120:      
             if len(obstacles) == 3:
-                if random.randint(0, 1) == 0:
-                    obstacles.append(Enemy(meteorOne))
-                elif random.randint(0, 1) == 1:
-                    obstacles.append(Enemy2(meteorTwo))
+                if random.randint(0, 3) == 0:
+                    obstacles.append(Enemy(enemyOne))
+                if random.randint(0, 3) == 1:
+                    obstacles.append(Enemy2(enemyTwo))
+                if random.randint(0, 3) == 2:
+                    obstacles.append(Enemy3(enemyThree))
+                elif random.randint(0, 3) == 3:
+                    obstacles.append(Enemy4(enemyFour))
         
         # If seconds is equal to 180 / 180 seconds / 3 minutes, then it randomly picks an enemy and appends them to the obstactles list
         if seconds >= 180:      
             if len(obstacles) == 4:
-                if random.randint(0, 1) == 0:
-                    obstacles.append(Enemy(meteorOne))
-                elif random.randint(0, 1) == 1:
-                    obstacles.append(Enemy2(meteorTwo))
+                if random.randint(0, 3) == 0:
+                    obstacles.append(Enemy(enemyOne))
+                if random.randint(0, 3) == 1:
+                    obstacles.append(Enemy2(enemyTwo))
+                if random.randint(0, 3) == 2:
+                    obstacles.append(Enemy3(enemyThree))
+                elif random.randint(0, 3) == 3:
+                    obstacles.append(Enemy4(enemyFour))
             
         
         for obstacle in obstacles:
-            global finalTime
+            
             obstacle.draw(gameScreen) # Draws Obstacles
             obstacle.update() # Updates Obstacle
-            finalTime = seconds
+            
             
             if deathCount >= 3: # If deathCount is equal to 3 / All three lives have been lost
                 end(deathCount)   # Start Endscreen
-                
+            
             if (not obstacle.onScreen()):  # Of obstacle is off screen
                 obstacles.remove(obstacle) # Removes Obstacle
                 deathCount += 1            # Adds or equals one to deathCount
                 
             if user.ship_rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
-                
+                finalTime = seconds
                 gameScreen.blit(explosion[3], (user.xPos+25, user.yPos-20)) # Makes an explosion when collison is present
                 deathCount += 1            # Adds or equals one to deathCount
-            
+                
             if bullet.rect.colliderect(obstacle.rect):  # If the rectangle of the obstacle collides with the Ship's rectangle
                 obstacles.remove(obstacle)                 # Removes obstacle
                 
@@ -380,7 +408,6 @@ def main():
         userInput = pygame.key.get_pressed() # Gets the state of all keyboard button
         #-----------------------------Drawing Everything-------------------------------------#
         # We draw everything from scratch on each frame.
-
         score()  # Starts score function
         
         clock.tick(30)  #Force frame rate to be slower
