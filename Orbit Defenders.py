@@ -13,7 +13,8 @@
 #   ...
 #   ...
 #-----------------------------------------------------------------------------
-
+# Overall Grade: L3
+# Good Job
 import pygame
 import random
 import time
@@ -294,9 +295,9 @@ def main():
         if len(obstacles) == 0:
             if random.randint(0, 3) == 0:
                 obstacles.append(Enemy(enemyOne))
-            if random.randint(0, 3) == 1:
+            elif random.randint(0, 3) == 1:
                 obstacles.append(Enemy2(enemyTwo))
-            if random.randint(0, 3) == 2:
+            elif random.randint(0, 3) == 2:
                 obstacles.append(Enemy3(enemyThree))
             elif random.randint(0, 3) == 3:
                 obstacles.append(Enemy4(enemyFour))
@@ -305,9 +306,9 @@ def main():
         if len(obstacles) == 1:
             if random.randint(0, 3) == 0:
                 obstacles.append(Enemy(enemyOne))
-            if random.randint(0, 3) == 1:
+            elif random.randint(0, 3) == 1:
                 obstacles.append(Enemy2(enemyTwo))
-            if random.randint(0, 3) == 2:
+            elif random.randint(0, 3) == 2:
                 obstacles.append(Enemy3(enemyThree))
             elif random.randint(0, 3) == 3:
                 obstacles.append(Enemy4(enemyFour))
@@ -317,9 +318,9 @@ def main():
             if len(obstacles) == 2:
                 if random.randint(0, 3) == 0:
                     obstacles.append(Enemy(enemyOne))
-                if random.randint(0, 3) == 1:
+                elif random.randint(0, 3) == 1:
                     obstacles.append(Enemy2(enemyTwo))
-                if random.randint(0, 3) == 2:
+                elif random.randint(0, 3) == 2:
                     obstacles.append(Enemy3(enemyThree))
                 elif random.randint(0, 3) == 3:
                     obstacles.append(Enemy4(enemyFour))
@@ -329,9 +330,9 @@ def main():
             if len(obstacles) == 3:
                 if random.randint(0, 3) == 0:
                     obstacles.append(Enemy(enemyOne))
-                if random.randint(0, 3) == 1:
+                elif random.randint(0, 3) == 1:
                     obstacles.append(Enemy2(enemyTwo))
-                if random.randint(0, 3) == 2:
+                elif random.randint(0, 3) == 2:
                     obstacles.append(Enemy3(enemyThree))
                 elif random.randint(0, 3) == 3:
                     obstacles.append(Enemy4(enemyFour))
@@ -341,9 +342,9 @@ def main():
             if len(obstacles) == 4:
                 if random.randint(0, 3) == 0:
                     obstacles.append(Enemy(enemyOne))
-                if random.randint(0, 3) == 1:
+                elif random.randint(0, 3) == 1:
                     obstacles.append(Enemy2(enemyTwo))
-                if random.randint(0, 3) == 2:
+                elif random.randint(0, 3) == 2:
                     obstacles.append(Enemy3(enemyThree))
                 elif random.randint(0, 3) == 3:
                     obstacles.append(Enemy4(enemyFour))
